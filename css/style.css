@@ -283,6 +283,30 @@ button, a, nav {
   height: 70px;
 }
 
+/* Navigation Logo */
+.nav-logo {
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.nav-logo a {
+  display: block;
+  transition: var(--transition);
+}
+
+.nav-logo img {
+  height: auto;
+  max-height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--transition);
+}
+
+.nav-logo a:hover img {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -333,8 +357,18 @@ button, a, nav {
 
 /* Mobile navigation */
 @media (max-width: 768px) {
+  .nav-container {
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+  }
+  
+  .nav-logo img {
+    max-height: 40px;
+  }
+  
   .nav-toggle {
     display: flex;
+    order: 3;
   }
   
   .nav-menu {
@@ -1245,6 +1279,26 @@ button, a, nav {
   padding: var(--space-2xl) 0;
 }
 
+/* Footer Logo */
+.footer-logo {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.footer-logo img {
+  height: auto;
+  max-height: 60px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+  transition: var(--transition);
+}
+
+.footer-logo img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
 .footer-content {
   text-align: center;
 }
@@ -1660,6 +1714,11 @@ button, a, nav {
   .color-swatch {
     width: 20px;
     height: 20px;
+  }
+  
+  /* Footer logo mobile */
+  .footer-logo img {
+    max-height: 40px;
   }
   
   /* Grid layouts for small screens */

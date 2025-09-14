@@ -939,6 +939,9 @@ function populateContent() {
   // Hero background - use responsive image function
   updateHeroImage();
   
+  // Logos
+  populateLogos();
+  
   // Story section
   updateElement('story-text', config.story ? `<p>${config.story}</p>` : '');
   
@@ -987,6 +990,42 @@ function formatDate(dateISO) {
     month: 'long',
     day: 'numeric'
   });
+}
+
+function populateLogos() {
+  // Navigation logo
+  const navLogo = document.getElementById('nav-logo');
+  if (navLogo && config.logo?.navigation?.enabled) {
+    const logoConfig = config.logo.navigation;
+    navLogo.innerHTML = `
+      <a href="${logoConfig.link || '#hero'}" aria-label="${logoConfig.alt}">
+        <img 
+          src="${logoConfig.image}" 
+          alt="${logoConfig.alt}"
+          width="${logoConfig.width || 120}"
+          height="${logoConfig.height || 60}"
+          style="max-width: ${logoConfig.width || 120}px; height: auto;"
+          onerror="this.style.display='none'"
+        >
+      </a>
+    `;
+  }
+  
+  // Footer logo
+  const footerLogo = document.getElementById('footer-logo');
+  if (footerLogo && config.logo?.footer?.enabled) {
+    const logoConfig = config.logo.footer;
+    footerLogo.innerHTML = `
+      <img 
+        src="${logoConfig.image}" 
+        alt="${logoConfig.alt}"
+        width="${logoConfig.width || 80}"
+        height="${logoConfig.height || 40}"
+        style="max-width: ${logoConfig.width || 80}px; height: auto;"
+        onerror="this.style.display='none'"
+      >
+    `;
+  }
 }
 
 function populateSchedule() {

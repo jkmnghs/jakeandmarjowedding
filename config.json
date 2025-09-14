@@ -14,6 +14,24 @@
     "useScript": false
   },
 
+  "logo": {
+    "navigation": {
+      "enabled": true,
+      "image": "images/logo/nav-logo.png",
+      "alt": "Jake & Marjo Wedding Logo",
+      "width": 120,
+      "height": 60,
+      "link": "#hero"
+    },
+    "footer": {
+      "enabled": true,
+      "image": "images/logo/footer-logo.png",
+      "alt": "Jake & Marjo Wedding Logo",
+      "width": 80,
+      "height": 40
+    }
+  },
+
   "gallery": [
     "images/gallery/g1.jpg",
     "images/gallery/g2.jpg",
@@ -24,9 +42,9 @@
   "story": "We met, we laughed, we road-tripped, and said yes. We can't wait to celebrate with you.",
 
   "schedule": [
-    { "title": "Ceremony", "time": "2:00 PM", "desc": "St. John Marie Vianney Parish" },
-    { "title": "Cocktails", "time": "4:00 PM", "desc": "Photos & light refreshments" },
-    { "title": "Reception", "time": "5:00 PM", "desc": "Dinner, toasts & dancing at Fruella's" }
+    { "title": "CEREMONY", "time": "2:00 PM", "desc": "St. John Marie Vianney Parish" },
+    { "title": "COCKTAILS", "time": "4:00 PM", "desc": "Photos & light refreshments" },
+    { "title": "RECEPTION", "time": "5:00 PM", "desc": "Dinner, toasts & dancing at Fruella's" }
   ],
 
   "venue": {
@@ -107,8 +125,8 @@
   },
 
   "registry": [
-    { "label": "Zola", "url": "#" },
-    { "label": "Honeymoon Fund", "url": "#" }
+    { "label": "ZOLA", "url": "#" },
+    { "label": "HONEYMOON FUND", "url": "#" }
   ],
 
   "faq": [
