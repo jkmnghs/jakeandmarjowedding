@@ -1,0 +1,130 @@
+{
+  "names": "Jake & Marjo",
+  "dateISO": "2025-12-12T15:00:00+08:00",
+  "locationShort": "Silang & Tagaytay, Cavite",
+  "tagline": "We're getting married!",
+  "heroImage": {
+    "mobile": "images/hero-mobile.jpg",
+    "tablet": "images/hero-tablet.jpg", 
+    "desktop": "images/hero-desktop.jpg",
+    "fallback": "images/hero.jpg"
+  },
+
+  "gallery": [
+    "images/gallery/g1.jpg",
+    "images/gallery/g2.jpg",
+    "images/gallery/g3.jpg",
+    "images/gallery/g4.jpg"
+  ],
+
+  "story": "We met, we laughed, we road-tripped, and said yes. We can't wait to celebrate with you.",
+
+  "schedule": [
+    { "title": "Ceremony", "time": "2:00 PM", "desc": "St. John Marie Vianney Parish" },
+    { "title": "Cocktails", "time": "4:00 PM", "desc": "Photos & light refreshments" },
+    { "title": "Reception", "time": "5:00 PM", "desc": "Dinner, toasts & dancing at Fruella's" }
+  ],
+
+  "venue": {
+    "ceremony": {
+      "label": "St. John Marie Vianney Parish — Lalaan II, Silang, Cavite (Diocese of Imus)",
+      "gmapsQuery": "St. John Marie Vianney Parish Lalaan II Silang Cavite",
+      "notes": ["Parking available", "Please arrive 15 minutes early"],
+      "directions": {
+        "google": "https://www.google.com/maps?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite",
+        "waze": "https://waze.com/ul?q=St.%20John%20Marie%20Vianney%20Parish%20Lalaan%20II%20Silang%20Cavite",
+        "apple": "http://maps.apple.com/?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite"
+      }
+    },
+    "reception": {
+      "label": "Fruella's Events Venue Tagaytay — 144 Daang Luma, Brgy. Salaban, Amadeo, Cavite",
+      "gmapsQuery": "Fruella's Events Venue Tagaytay 144 Daang Luma Salaban Amadeo Cavite",
+      "notes": ["Garden formal", "Follow venue signages upon entry"],
+      "directions": {
+        "google": "https://www.google.com/maps?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite",
+        "waze": "https://waze.com/ul?q=Fruella%27s%20Events%20Venue%20Tagaytay%20Amadeo%20Cavite",
+        "apple": "http://maps.apple.com/?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite"
+      }
+    }
+  },
+
+  "travel": {
+    "intro": "Getting to our wedding venues is easy! Here are some transportation options and tips for your journey.",
+    "options": [
+      { "method": "Private Car", "description": "Most convenient option with ample parking available at both venues", "duration": "1.5-2 hours from Manila" },
+      { "method": "Bus", "description": "Take a bus to Tagaytay then tricycle/jeepney to venues", "duration": "2-3 hours from Manila" },
+      { "method": "Ride-sharing", "description": "Grab or other ride-sharing services available", "duration": "1.5-2 hours from Manila" }
+    ]
+  },
+
+  "accommodations": {
+    "intro": "Stay close to the celebration! Here are recommended hotels near our wedding venues.",
+    "hotels": [
+      { "name": "Taal Vista Hotel", "distance": "15-20 min to venues", "type": "Luxury Resort", "link": "#" },
+      { "name": "Crosswinds Resort Suites", "distance": "10-15 min to venues", "type": "Resort", "link": "#" },
+      { "name": "Hotel Kimberly Tagaytay", "distance": "12-18 min to venues", "type": "Hotel", "link": "#" },
+      { "name": "Nurture Wellness Village", "distance": "20-25 min to venues", "type": "Wellness Resort", "link": "#" }
+    ]
+  },
+
+  "attire": {
+    "note": "To honor the theme of the occasion, we kindly ask all guests to strictly follow our color palette.",
+    "women": {
+      "title": "WOMEN",
+      "guidelines": "Strictly long formal gown — Pale Blue, Pale Gray, Pale Green.",
+      "palette": [
+        { "name": "Pale Blue", "hex": "#BFD4E5" },
+        { "name": "Pale Gray", "hex": "#D9DADD" },
+        { "name": "Pale Green", "hex": "#C9DEC9" }
+      ],
+      "slides": [
+        { "img": "images/attire/w1.jpg", "alt": "for ladies" },
+        { "img": "images/attire/w2.jpg", "alt": "assorted ladies" },
+        { "img": "images/attire/w3.jpg", "alt": "elegant hues of Pale blue" },
+        { "img": "images/attire/w4.jpg", "alt": "winter pale gray" },
+        { "img": "images/attire/w5.jpg", "alt": "shade of pale green" },
+        { "img": "images/attire/w6.jpg", "alt": "strictly women" },
+        { "img": "images/attire/w7.jpg", "alt": "JM Logo Women" }
+      ]
+    },
+    "men": {
+      "title": "GENTLEMEN",
+      "guidelines": "Black formal suit with white dress shirt, black bow tie or neck tie, and black shoes.",
+      "palette": [
+        { "name": "Black", "hex": "#000000" },
+        { "name": "White", "hex": "#FFFFFF" }
+      ],
+      "slides": [
+        { "img": "images/attire/m1.jpg", "alt": "For Gentlemen" },
+        { "img": "images/attire/m2.jpg", "alt": "Black Suit and white shirt" },
+        { "img": "images/attire/m3.jpg", "alt": "Bowtie or Necktie and Black shoes" },
+        { "img": "images/attire/m4.jpg", "alt": "strictly men" },
+        { "img": "images/attire/m5.jpg", "alt": "JM Logo men" }
+      ]
+    }
+  },
+
+  "registry": [
+    { "label": "Zola", "url": "#" },
+    { "label": "Honeymoon Fund", "url": "#" }
+  ],
+
+  "faq": [
+    { "q": "Dress code?", "a": "Garden formal in powder blue, cream, and neutrals." },
+    { "q": "Kids?", "a": "We love your little ones, but this is an adults-only celebration." }
+  ],
+
+  "rsvpEmail": "you@example.com",
+
+  "theme": {
+    "primary": "#6B7AA1",
+    "secondary": "#B4C5E4",
+    "bg": "#FAF8F3",
+    "text": "#1C1C1C",
+    "serif": "'Playfair Display', serif",
+    "sans": "'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif",
+    "script": "'Great Vibes', cursive",
+    "radius": "16px",
+    "shadow": "0 8px 24px rgba(0,0,0,.06)"
+  }
+}
