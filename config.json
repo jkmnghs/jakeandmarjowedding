@@ -14,21 +14,19 @@
     "useScript": false
   },
 
-  "logo": {
-    "navigation": {
-      "enabled": true,
-      "image": "images/logo/nav-logo.png",
-      "alt": "Jake & Marjo Wedding Logo",
-      "width": 120,
-      "height": 60,
-      "link": "#hero"
+  "branding": {
+    "nav": {
+      "src": "images/brand/jm-mark.svg",
+      "srcset": "images/brand/jm-mark@2x.png 2x, images/brand/jm-mark@3x.png 3x",
+      "alt": "J & M crest",
+      "size": { "desktop": 120, "mobile": 115 },
+      "useInvertOnDark": true
     },
     "footer": {
-      "enabled": true,
-      "image": "images/logo/footer-logo.png",
-      "alt": "Jake & Marjo Wedding Logo",
-      "width": 80,
-      "height": 40
+      "src": "images/brand/jm-mark.svg",
+      "srcset": "images/brand/jm-mark-footer@2x.png 2x",
+      "alt": "J & M crest",
+      "size": 150
     }
   },
 

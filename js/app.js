@@ -268,8 +268,10 @@ function initializeNavigation() {
     // Update nav background opacity
     if (window.scrollY > 50) {
       nav.style.background = 'rgba(250, 248, 243, 0.98)';
+      nav.classList.add('is-scrolled');
     } else {
       nav.style.background = 'rgba(250, 248, 243, 0.95)';
+      nav.classList.remove('is-scrolled');
     }
   }, 10));
 }
@@ -939,8 +941,8 @@ function populateContent() {
   // Hero background - use responsive image function
   updateHeroImage();
   
-  // Logos
-  populateLogos();
+  // Branding
+  populateBranding();
   
   // Story section
   updateElement('story-text', config.story ? `<p>${config.story}</p>` : '');
@@ -992,38 +994,63 @@ function formatDate(dateISO) {
   });
 }
 
-function populateLogos() {
-  // Navigation logo
-  const navLogo = document.getElementById('nav-logo');
-  if (navLogo && config.logo?.navigation?.enabled) {
-    const logoConfig = config.logo.navigation;
-    navLogo.innerHTML = `
-      <a href="${logoConfig.link || '#hero'}" aria-label="${logoConfig.alt}">
-        <img 
-          src="${logoConfig.image}" 
-          alt="${logoConfig.alt}"
-          width="${logoConfig.width || 120}"
-          height="${logoConfig.height || 60}"
-          style="max-width: ${logoConfig.width || 120}px; height: auto;"
-          onerror="this.style.display='none'"
-        >
+function populateBranding() {
+  // Update CSS variables with config values
+  if (config.branding?.nav?.size) {
+    const navSize = config.branding.nav.size;
+    const root = document.documentElement;
+    
+    if (typeof navSize === 'object') {
+      // Handle responsive sizing
+      root.style.setProperty('--nav-logo-size-desktop', `${navSize.desktop}px`);
+      root.style.setProperty('--nav-logo-size-mobile', `${navSize.mobile}px`);
+    } else {
+      // Handle single size value
+      root.style.setProperty('--nav-logo-size-desktop', `${navSize}px`);
+      root.style.setProperty('--nav-logo-size-mobile', `${navSize}px`);
+    }
+  }
+  
+  // Update footer logo size
+  if (config.branding?.footer?.size) {
+    const footerSize = config.branding.footer.size;
+    const root = document.documentElement;
+    root.style.setProperty('--footer-logo-size', `${footerSize}px`);
+  }
+  
+  // Navigation branding
+  const navBrand = document.getElementById('nav-brand');
+  if (navBrand && config.branding?.nav) {
+    const brandConfig = config.branding.nav;
+    const srcsetAttr = brandConfig.srcset ? `srcset="${brandConfig.srcset}"` : '';
+    
+    navBrand.innerHTML = `
+      <a class="brand" href="#hero" aria-label="Home">
+        <img class="brand-logo" 
+             alt="${brandConfig.alt}"
+             src="${brandConfig.src}"
+             ${srcsetAttr}
+             width="auto" 
+             height="auto"
+             onerror="this.style.display='none'" />
       </a>
     `;
   }
   
-  // Footer logo
-  const footerLogo = document.getElementById('footer-logo');
-  if (footerLogo && config.logo?.footer?.enabled) {
-    const logoConfig = config.logo.footer;
-    footerLogo.innerHTML = `
-      <img 
-        src="${logoConfig.image}" 
-        alt="${logoConfig.alt}"
-        width="${logoConfig.width || 80}"
-        height="${logoConfig.height || 40}"
-        style="max-width: ${logoConfig.width || 80}px; height: auto;"
-        onerror="this.style.display='none'"
-      >
+  // Footer branding
+  const footerBrand = document.getElementById('footer-brand');
+  if (footerBrand && config.branding?.footer) {
+    const brandConfig = config.branding.footer;
+    const srcsetAttr = brandConfig.srcset ? `srcset="${brandConfig.srcset}"` : '';
+    
+    footerBrand.innerHTML = `
+      <img class="footer-logo" 
+           alt="${brandConfig.alt}"
+           src="${brandConfig.src}"
+           ${srcsetAttr}
+           width="auto" 
+           height="auto"
+           onerror="this.style.display='none'" />
     `;
   }
 }

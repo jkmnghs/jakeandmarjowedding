@@ -27,6 +27,11 @@
   --sans: var(--cfg-sans, 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif);
   --script: var(--cfg-script, 'Great Vibes', cursive);
   
+  /* Branding Sizes */
+  --nav-logo-size-desktop: clamp(40px, 2.8vw, 52px);
+  --nav-logo-size-mobile: 36px;
+  --footer-logo-size: 128px;
+  
   /* Spacing */
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
@@ -213,15 +218,35 @@ button, a, nav {
 }
 
 /* Buttons */
+/* Universal button reset - modern minimalist style with borders */
+button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not(.carousel-btn):not(.carousel-dot):not(.faq-question) {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--text);
+  border-radius: var(--border-radius);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--sans);
+  font-weight: 500;
+}
+
+button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not(.carousel-btn):not(.carousel-dot):not(.faq-question):hover,
+button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not(.carousel-btn):not(.carousel-dot):not(.faq-question):focus {
+  background: #ADD8E6;
+  color: var(--primary);
+  border-color: #ADD8E6;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-md) var(--space-xl);
-  border: 2px solid transparent;
+  border: 1px solid var(--text);
   border-radius: var(--border-radius);
   font-family: var(--sans);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1rem;
   letter-spacing: 0.02em;
   text-decoration: none;
@@ -230,34 +255,37 @@ button, a, nav {
   transition: var(--transition);
   min-height: 48px; /* Touch-friendly minimum */
   -webkit-tap-highlight-color: transparent; /* Remove iOS tap highlight */
+  background: transparent;
+  color: var(--text);
 }
 
 .btn-primary {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: var(--gray-700);
-  border-color: var(--gray-700);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: #ADD8E6;
+  color: var(--primary);
+  border-color: #ADD8E6;
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--primary);
-  border-color: var(--primary);
+  color: var(--text);
+  border-color: var(--text);
+  font-weight: 400;
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background: #ADD8E6;
+  color: var(--primary);
+  border-color: #ADD8E6;
+  transform: translateY(-1px);
 }
 
 /* Navigation */
@@ -283,38 +311,79 @@ button, a, nav {
   height: 70px;
 }
 
-/* Navigation Logo */
-.nav-logo {
+/* Navigation Branding System */
+.nav-brand {
   flex-shrink: 0;
   z-index: 2;
 }
 
-.nav-logo a {
+.nav-brand .brand {
   display: block;
   transition: var(--transition);
+  text-decoration: none;
 }
 
-.nav-logo img {
-  height: auto;
-  max-height: 50px;
-  width: auto;
-  object-fit: contain;
+.brand-logo {
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)) drop-shadow(0 0 3px rgba(0,0,0,.25));
   transition: var(--transition);
+  object-fit: contain;
+  height: auto;
 }
 
-.nav-logo a:hover img {
+.nav-brand .brand:hover .brand-logo {
   opacity: 0.8;
   transform: scale(1.05);
+}
+
+/* Responsive brand logo sizing */
+@media (min-width: 900px) {
+  .brand-logo {
+    width: var(--nav-logo-size-desktop);
+  }
+}
+
+@media (max-width: 899px) {
+  .brand-logo {
+    width: var(--nav-logo-size-mobile);
+  }
+}
+
+/* Sticky nav: shrink on scroll but keep readable */
+.nav.is-scrolled .brand-logo {
+  width: calc(var(--nav-logo-size-desktop) * 0.75);
+}
+
+/* Optional wordmark next to crest */
+.brand-word {
+  margin-left: 0.55rem;
+  font-family: var(--display, var(--serif));
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Invert on dark hero (if provided) */
+.hero.is-dark .brand-logo {
+  content: url("images/brand/jm-mark-invert.svg");
 }
 
 .nav-toggle {
   display: none;
   flex-direction: column;
   gap: 4px;
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid transparent;
   cursor: pointer;
   padding: var(--space-sm);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus {
+  background: #ADD8E6;
+  border-color: #ADD8E6;
 }
 
 .nav-toggle span {
@@ -322,6 +391,10 @@ button, a, nav {
   height: 2px;
   background: var(--text);
   transition: var(--transition-fast);
+}
+
+.nav-toggle:hover span {
+  background: var(--primary);
 }
 
 .nav-menu {
@@ -360,10 +433,6 @@ button, a, nav {
   .nav-container {
     justify-content: space-between;
     padding: 0 var(--space-md);
-  }
-  
-  .nav-logo img {
-    max-height: 40px;
   }
   
   .nav-toggle {
@@ -454,6 +523,7 @@ button, a, nav {
 }
 
 .hero-tagline {
+  font-family: var(--serif);
   font-size: clamp(1.2rem, 2.5vw, 1.5rem);
   margin-bottom: var(--space-sm);
   opacity: 0.95;
@@ -467,6 +537,7 @@ button, a, nav {
 }
 
 .hero-location {
+  font-family: var(--serif);
   font-size: clamp(1rem, 2vw, 1.2rem);
   margin-bottom: var(--space-2xl);
   opacity: 0.9;
@@ -503,6 +574,19 @@ button, a, nav {
   gap: var(--space-lg);
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* Make hero buttons text white and bold */
+.hero-actions .btn {
+  color: white !important;
+  font-weight: bold !important;
+  border-color: white !important;
+  border-width: 2px !important;
+}
+
+.hero-actions .btn:hover,
+.hero-actions .btn:focus {
+  color: var(--primary) !important;
 }
 
 /* Story Section */
@@ -719,12 +803,21 @@ button, a, nav {
 
 .cta.outline:hover {
   transform: translateY(-1px);
-  background: rgba(0, 0, 0, 0.08);
+  background: #ADD8E6;
 }
 
 .cta.outline:focus {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+
+/* Pale blue hover and active states for stays and travel guide buttons */
+.stays #stays-link.cta.outline:hover,
+.stays #stays-link.cta.outline:active,
+.travel .cta.outline:hover,
+.travel .cta.outline:active {
+  background-color: #ADD8E6 !important;
+  border-color: #ADD8E6 !important;
 }
 
 /* Modal Styles */
@@ -756,21 +849,24 @@ button, a, nav {
   top: 1rem;
   right: 1rem;
   font-size: 2rem;
-  background: none;
+  background: transparent;
   border: none;
   color: #fff;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
+  opacity: 0.7;
 }
 
 .flip-modal .close:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--secondary);
+  color: var(--primary);
+  opacity: 1;
 }
 
 .flip-modal .close:focus {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
 
@@ -1224,21 +1320,24 @@ button, a, nav {
   top: 1rem;
   right: 1rem;
   font-size: 2rem;
-  background: none;
+  background: transparent;
   border: none;
   color: #fff;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
+  opacity: 0.7;
 }
 
 .rsvp-modal .close:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--secondary);
+  color: var(--primary);
+  opacity: 1;
 }
 
 .rsvp-modal .close:focus {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
 
@@ -1279,22 +1378,22 @@ button, a, nav {
   padding: var(--space-2xl) 0;
 }
 
-/* Footer Logo */
-.footer-logo {
-  text-align: center;
-  margin-bottom: var(--space-lg);
+/* Footer Branding System */
+.footer-brand {
+  display: grid;
+  place-items: center;
+  margin-block: 2rem 1rem;
 }
 
-.footer-logo img {
+.footer-brand .footer-logo {
+  width: var(--footer-logo-size);
   height: auto;
-  max-height: 60px;
-  width: auto;
   object-fit: contain;
   opacity: 0.9;
   transition: var(--transition);
 }
 
-.footer-logo img:hover {
+.footer-brand .footer-logo:hover {
   opacity: 1;
   transform: scale(1.05);
 }
@@ -1501,25 +1600,33 @@ button, a, nav {
 .customize-actions button {
   flex: 1;
   padding: var(--space-sm);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--text);
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 0.9rem;
   transition: var(--transition);
+  background: transparent;
+  color: var(--text);
 }
 
 .customize-actions button[type="submit"] {
-  background: var(--primary);
-  color: white;
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+  font-weight: 500;
 }
 
 .customize-actions button[type="button"] {
-  background: white;
-  color: var(--primary);
+  background: transparent;
+  color: var(--text);
+  border-color: var(--text);
+  font-weight: 400;
 }
 
 .customize-actions button:hover {
-  opacity: 0.8;
+  background: #ADD8E6;
+  color: var(--primary);
+  border-color: #ADD8E6;
 }
 
 /* Responsive Design */
@@ -1714,11 +1821,6 @@ button, a, nav {
   .color-swatch {
     width: 20px;
     height: 20px;
-  }
-  
-  /* Footer logo mobile */
-  .footer-logo img {
-    max-height: 40px;
   }
   
   /* Grid layouts for small screens */
