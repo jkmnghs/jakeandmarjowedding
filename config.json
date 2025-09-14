@@ -10,6 +10,10 @@
     "fallback": "images/hero.jpg"
   },
 
+  "hero": {
+    "useScript": false
+  },
+
   "gallery": [
     "images/gallery/g1.jpg",
     "images/gallery/g2.jpg",
@@ -32,8 +36,7 @@
       "notes": ["Parking available", "Please arrive 15 minutes early"],
       "directions": {
         "google": "https://www.google.com/maps?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite",
-        "waze": "https://waze.com/ul?q=St.%20John%20Marie%20Vianney%20Parish%20Lalaan%20II%20Silang%20Cavite",
-        "apple": "http://maps.apple.com/?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite"
+        "waze": "https://waze.com/ul?q=St.%20John%20Marie%20Vianney%20Parish%20Lalaan%20II%20Silang%20Cavite"
       }
     },
     "reception": {
@@ -42,29 +45,28 @@
       "notes": ["Garden formal", "Follow venue signages upon entry"],
       "directions": {
         "google": "https://www.google.com/maps?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite",
-        "waze": "https://waze.com/ul?q=Fruella%27s%20Events%20Venue%20Tagaytay%20Amadeo%20Cavite",
-        "apple": "http://maps.apple.com/?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite"
+        "waze": "https://waze.com/ul?q=Fruella%27s%20Events%20Venue%20Tagaytay%20Amadeo%20Cavite"
       }
     }
   },
 
-  "travel": {
-    "intro": "Getting to our wedding venues is easy! Here are some transportation options and tips for your journey.",
-    "options": [
-      { "method": "Private Car", "description": "Most convenient option with ample parking available at both venues", "duration": "1.5-2 hours from Manila" },
-      { "method": "Bus", "description": "Take a bus to Tagaytay then tricycle/jeepney to venues", "duration": "2-3 hours from Manila" },
-      { "method": "Ride-sharing", "description": "Grab or other ride-sharing services available", "duration": "1.5-2 hours from Manila" }
-    ]
-  },
-
-  "accommodations": {
-    "intro": "Stay close to the celebration! Here are recommended hotels near our wedding venues.",
-    "hotels": [
-      { "name": "Taal Vista Hotel", "distance": "15-20 min to venues", "type": "Luxury Resort", "link": "#" },
-      { "name": "Crosswinds Resort Suites", "distance": "10-15 min to venues", "type": "Resort", "link": "#" },
-      { "name": "Hotel Kimberly Tagaytay", "distance": "12-18 min to venues", "type": "Hotel", "link": "#" },
-      { "name": "Nurture Wellness Village", "distance": "20-25 min to venues", "type": "Wellness Resort", "link": "#" }
-    ]
+  "staysTravel": {
+    "embed": true,
+    "stays": {
+      "title": "STAYS",
+      "subcopy": "We are pleased to share a selection of recommended accommodations for our big day.",
+      "label": "OUR RECOMMENDATIONS",
+      "url": "https://heyzine.com/flip-book/70a0f6614b.html"
+    },
+    "travel": {
+      "title": "TRAVEL GUIDE",
+      "subcopy": "To make your stay even more memorable, here's a curated list of places to lounge and enjoy.",
+      "links": [
+        { "label": "CAFÉS", "url": "https://heyzine.com/flip-book/f543ce1be0.html" },
+        { "label": "DINING", "url": "https://heyzine.com/flip-book/f543ce1be0.html#page=DINING" }, 
+        { "label": "ACTIVITIES", "url": "https://heyzine.com/flip-book/843c81a409.html" }
+      ]
+    }
   },
 
   "attire": {
@@ -114,6 +116,17 @@
     { "q": "Kids?", "a": "We love your little ones, but this is an adults-only celebration." }
   ],
 
+  "rsvp": {
+    "deadlineISO": "2025-10-31",
+    "link": "https://docs.google.com/forms/d/e/1FAIpQLScwsI6-FxeK9wOjNWBq4jqidVLZzDBZ8phVtl_NXkBAZA4vrQ/viewform",
+    "embed": true,
+    "buttonLabel": "RSVP HERE",
+    "envelopeImage": "images/rsvp/envelope.png",
+    "cardImage": "images/rsvp/card.png",
+    "thanksMessage": "Thank you! We've received your RSVP.",
+    "closedMessage": "RSVP is now closed. Please contact the couple directly."
+  },
+
   "rsvpEmail": "you@example.com",
 
   "theme": {
@@ -121,7 +134,8 @@
     "secondary": "#B4C5E4",
     "bg": "#FAF8F3",
     "text": "#1C1C1C",
-    "serif": "'Playfair Display', serif",
+    "display": "'Cinzel Decorative', serif",
+    "serif": "'Cormorant Garamond', serif",
     "sans": "'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif",
     "script": "'Great Vibes', cursive",
     "radius": "16px",

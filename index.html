@@ -8,6 +8,11 @@
   <meta name="keywords" content="wedding, Jake, Marjo, December 2025, Silang, Tagaytay, Cavite">
   <link rel="canonical" href="https://jakeandmarjowedding.com">
   
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
@@ -61,8 +66,7 @@
         <li role="none"><a href="#schedule" role="menuitem">Timeline</a></li>
         <li role="none"><a href="#venue" role="menuitem">Venue</a></li>
         <li role="none"><a href="#attire" role="menuitem">Attire</a></li>
-        <li role="none"><a href="#travel" role="menuitem">Travel</a></li>
-        <li role="none"><a href="#accommodations" role="menuitem">Accommodations</a></li>
+        <li role="none"><a href="#stays-travel" role="menuitem">Stays & Travel</a></li>
         <li role="none"><a href="#registry" role="menuitem">Registry</a></li>
         <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
         <li role="none"><a href="#rsvp" role="menuitem">RSVP</a></li>
@@ -155,14 +159,6 @@
                 </svg>
                 Waze
               </a>
-              <a href="http://maps.apple.com/?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite" 
-                 class="btn btn-secondary" target="_blank" rel="noopener">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                Apple Maps
-              </a>
             </div>
           </div>
           
@@ -200,14 +196,6 @@
                   <circle cx="12" cy="10" r="3"></circle>
                 </svg>
                 Waze
-              </a>
-              <a href="http://maps.apple.com/?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite" 
-                 class="btn btn-secondary" target="_blank" rel="noopener">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                Apple Maps
               </a>
             </div>
           </div>
@@ -292,33 +280,28 @@
       </div>
     </section>
 
-    <!-- Travel Section -->
-    <section id="travel" class="travel section">
+    <!-- Stays & Travel Section -->
+    <section id="stays-travel" class="stays-travel section">
       <div class="container">
-        <h2>Travel</h2>
-        <div class="travel-content">
-          <div class="travel-intro" id="travel-intro">
-            <!-- Travel intro will be loaded here -->
-          </div>
-          <div class="travel-options" id="travel-options">
-            <!-- Travel options will be loaded here -->
+        <div class="block stays">
+          <h2 id="stays-title">STAYS</h2>
+          <p class="sub" id="stays-subcopy">We are pleased to share a selection of recommended accommodations for our big day.</p>
+          <p><a class="cta outline" data-embed-link id="stays-link" href="#" role="button" rel="noopener noreferrer">OUR RECOMMENDATIONS</a></p>
+        </div>
+
+        <div class="block travel">
+          <h2 id="travel-title">TRAVEL GUIDE</h2>
+          <p class="sub" id="travel-subcopy">To make your stay even more memorable, here's a curated list of places to lounge and enjoy.</p>
+          <div class="cta-row" id="travel-links">
+            <!-- Travel guide links will be populated by JS -->
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Accommodations Section -->
-    <section id="accommodations" class="accommodations section">
-      <div class="container">
-        <h2>Accommodations</h2>
-        <div class="accommodations-content">
-          <div class="accommodations-intro" id="accommodations-intro">
-            <!-- Accommodations intro will be loaded here -->
-          </div>
-          <div class="accommodations-list" id="accommodations-list">
-            <!-- Accommodations list will be loaded here -->
-          </div>
-        </div>
+      <!-- Modal viewer (only if embed=true) -->
+      <div class="flip-modal" hidden role="dialog" aria-modal="true" aria-label="Flip-book viewer">
+        <button class="close" aria-label="Close">×</button>
+        <iframe title="Flip book" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
 
@@ -346,17 +329,24 @@
     <!-- RSVP Section -->
     <section id="rsvp" class="rsvp section">
       <div class="container">
-        <div class="rsvp-content">
-          <h2>RSVP</h2>
-          <p class="rsvp-intro">We can't wait to celebrate with you! Please let us know if you'll be joining us.</p>
-          <div class="rsvp-actions">
-            <a href="mailto:you@example.com?subject=RSVP for Jake & Marjo Wedding&body=Hello! I would like to RSVP for your wedding on December 12, 2025.%0A%0AName(s): %0ANumber of guests: %0AAttending: Yes / No%0A%0APlease let me know if you need any additional information.%0A%0ACongratulations!" 
-               class="btn btn-primary">
-              Send RSVP Email
-            </a>
-          </div>
-          <p class="rsvp-deadline">Please RSVP by November 15, 2025</p>
+        <h2>RSVP</h2>
+        <p class="sub">RSVP by <strong class="deadline"></strong>.</p>
+
+        <div class="envelope" aria-labelledby="rsvpButton">
+          <img class="envelope-bg" src="" alt="Blue envelope" loading="lazy" />
+          <img class="envelope-card" src="" alt="Photo card" loading="lazy" />
+          <a id="rsvpButton" class="cta outline" href="#" data-rsvp-trigger>
+            RSVP HERE
+          </a>
         </div>
+
+        <p class="closed-note" hidden></p>
+      </div>
+
+      <!-- Modal (only if embed=true) -->
+      <div class="rsvp-modal" hidden role="dialog" aria-modal="true" aria-label="RSVP form">
+        <button class="close" aria-label="Close">×</button>
+        <iframe title="RSVP form" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
   </main>

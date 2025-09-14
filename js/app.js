@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load configuration
     await loadConfig();
     
+    // Configure typography from theme settings
+    configureFonts();
+    
     // Initialize all components
     initializeNavigation();
     initializeCountdown();
@@ -157,6 +160,26 @@ async function loadConfig() {
       tagline: "We're getting married!",
       heroImage: "images/hero.jpg"
     };
+  }
+}
+
+/**
+ * Configure typography from theme settings
+ * Maps config.theme fonts to CSS variables
+ */
+function configureFonts() {
+  const theme = (config && config.theme) || {};
+  const root = document.documentElement;
+  
+  // Map theme fonts to CSS variables
+  if (theme.display) root.style.setProperty('--cfg-display', theme.display);
+  if (theme.serif)   root.style.setProperty('--cfg-serif',   theme.serif);
+  if (theme.sans)    root.style.setProperty('--cfg-sans',    theme.sans);
+  if (theme.script)  root.style.setProperty('--cfg-script',  theme.script);
+  
+  // Optional: toggle script style for hero names via config.hero.useScript
+  if (config && config.hero && config.hero.useScript) {
+    document.querySelectorAll('.hero .names, .hero-names').forEach(el => el.classList.add('script'));
   }
 }
 
@@ -710,123 +733,194 @@ function initializeFAQ() {
  * RSVP Form
  */
 function initializeRSVP() {
-  const form = document.getElementById('rsvp-form');
-  const fallback = document.getElementById('rsvp-fallback');
-  const copyBtn = document.getElementById('copy-rsvp');
+  // Populate RSVP content from config
+  populateRSVPSection();
   
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+  // Initialize RSVP modal functionality
+  initializeRSVPModal();
+  
+  // Check if RSVP is closed
+  checkRSVPDeadline();
+}
+
+function populateRSVPSection() {
+  if (!config.rsvp) return;
+  
+  // Update deadline text
+  const deadlineEl = document.querySelector('.rsvp .deadline');
+  if (deadlineEl && config.rsvp.deadlineISO) {
+    const deadline = new Date(config.rsvp.deadlineISO);
+    const formattedDeadline = deadline.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    deadlineEl.textContent = formattedDeadline;
+  }
+  
+  // Update images
+  const envelopeBg = document.querySelector('.envelope-bg');
+  const envelopeCard = document.querySelector('.envelope-card');
+  const rsvpButton = document.querySelector('#rsvpButton');
+  
+  if (envelopeBg && config.rsvp.envelopeImage) {
+    envelopeBg.src = config.rsvp.envelopeImage;
+  }
+  
+  if (envelopeCard && config.rsvp.cardImage) {
+    envelopeCard.src = config.rsvp.cardImage;
+  }
+  
+  if (rsvpButton) {
+    rsvpButton.textContent = config.rsvp.buttonLabel || 'RSVP HERE';
+    rsvpButton.href = config.rsvp.link || '#';
+  }
+}
+
+function initializeRSVPModal() {
+  const trigger = document.querySelector('[data-rsvp-trigger]');
+  const modal = document.querySelector('.rsvp-modal');
+  const closeBtn = modal?.querySelector('.close');
+  const iframe = modal?.querySelector('iframe');
+  
+  if (!trigger || !modal) return;
+  
+  trigger.addEventListener('click', (e) => {
+    if (config.rsvp?.embed) {
+      e.preventDefault();
+      openRSVPModal();
+    } else {
+      // Open in new tab
+      e.preventDefault();
+      window.open(config.rsvp.link, '_blank', 'noopener,noreferrer');
+    }
+  });
+  
+  closeBtn?.addEventListener('click', closeRSVPModal);
+  
+  // Close modal on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) {
+      closeRSVPModal();
+    }
+  });
+  
+  // Close modal on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeRSVPModal();
+    }
+  });
+  
+  function openRSVPModal() {
+    if (!modal || !iframe) return;
     
-    // Validate form
-    const isValid = validateRSVPForm(form);
-    if (!isValid) return;
+    // Set iframe source
+    iframe.src = config.rsvp.link;
     
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    // Show modal
+    modal.hidden = false;
     
-    // Try to send email
-    if (config.rsvpEmail) {
-      const subject = `RSVP: ${data.name}`;
-      const body = formatRSVPData(data);
-      const mailtoUrl = `mailto:${config.rsvpEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Focus management
+    const firstFocusable = closeBtn;
+    firstFocusable?.focus();
+    
+    // Trap focus within modal
+    trapFocusInModal(modal);
+    
+    announceToScreenReader('RSVP form opened');
+  }
+  
+  function closeRSVPModal() {
+    if (!modal || !iframe) return;
+    
+    // Hide modal
+    modal.hidden = true;
+    
+    // Clear iframe source for privacy
+    iframe.src = '';
+    
+    // Return focus to trigger
+    trigger?.focus();
+    
+    announceToScreenReader('RSVP form closed');
+  }
+}
+
+function checkRSVPDeadline() {
+  if (!config.rsvp?.deadlineISO) return;
+  
+  const now = new Date();
+  const deadline = new Date(config.rsvp.deadlineISO);
+  
+  // Set deadline to end of day
+  deadline.setHours(23, 59, 59, 999);
+  
+  if (now > deadline) {
+    // RSVP is closed
+    const trigger = document.querySelector('[data-rsvp-trigger]');
+    const closedNote = document.querySelector('.closed-note');
+    
+    if (trigger) {
+      trigger.setAttribute('aria-disabled', 'true');
+      trigger.style.display = 'none';
+    }
+    
+    if (closedNote && config.rsvp.closedMessage) {
+      closedNote.textContent = config.rsvp.closedMessage;
+      closedNote.hidden = false;
       
-      try {
-        window.location.href = mailtoUrl;
-        announceToScreenReader('Email client opened with RSVP details');
-      } catch (error) {
-        showRSVPFallback(data);
-      }
-    } else {
-      showRSVPFallback(data);
-    }
-  });
-  
-  copyBtn?.addEventListener('click', async () => {
-    const summary = document.getElementById('rsvp-summary');
-    if (summary?.textContent) {
-      try {
-        await navigator.clipboard.writeText(summary.textContent);
-        announceToScreenReader('RSVP details copied to clipboard');
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => {
-          copyBtn.textContent = 'Copy to Clipboard';
-        }, 2000);
-      } catch (error) {
-        console.error('Failed to copy to clipboard:', error);
+      // Add contact link if email is available
+      if (config.rsvpEmail) {
+        const contactLink = document.createElement('a');
+        contactLink.href = `mailto:${config.rsvpEmail}`;
+        contactLink.textContent = 'Contact us';
+        contactLink.style.marginLeft = '0.5rem';
+        closedNote.appendChild(contactLink);
       }
     }
-  });
+  }
 }
 
-function validateRSVPForm(form) {
-  const requiredFields = form.querySelectorAll('[required]');
-  let isValid = true;
+function trapFocusInModal(modal) {
+  const focusableElements = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
   
-  requiredFields.forEach(field => {
-    const errorEl = document.getElementById(`${field.name}-error`);
+  if (focusableElements.length === 0) return;
+  
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  
+  function handleTabKey(e) {
+    if (e.key !== 'Tab') return;
     
-    if (!field.value.trim()) {
-      showFieldError(field, errorEl, 'This field is required');
-      isValid = false;
-    } else if (field.type === 'email' && !isValidEmail(field.value)) {
-      showFieldError(field, errorEl, 'Please enter a valid email address');
-      isValid = false;
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
     } else {
-      clearFieldError(field, errorEl);
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
     }
+  }
+  
+  modal.addEventListener('keydown', handleTabKey);
+  
+  // Remove event listener when modal is closed
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'hidden' && modal.hidden) {
+        modal.removeEventListener('keydown', handleTabKey);
+        observer.disconnect();
+      }
+    });
   });
   
-  return isValid;
-}
-
-function showFieldError(field, errorEl, message) {
-  field.style.borderColor = '#dc2626';
-  if (errorEl) {
-    errorEl.textContent = message;
-    errorEl.classList.add('show');
-  }
-}
-
-function clearFieldError(field, errorEl) {
-  field.style.borderColor = '';
-  if (errorEl) {
-    errorEl.textContent = '';
-    errorEl.classList.remove('show');
-  }
-}
-
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-function formatRSVPData(data) {
-  return `RSVP Details:
-
-Name: ${data.name}
-Email: ${data.email}
-Attendance: ${data.attendance === 'accept' ? 'Yes, I will attend' : 'Sorry, I cannot attend'}
-Number of guests: ${data.guests || '1'}
-Dietary restrictions: ${data.dietary || 'None'}
-Message: ${data.message || 'None'}
-
----
-Sent from ${config.names} Wedding Website`;
-}
-
-function showRSVPFallback(data) {
-  const form = document.getElementById('rsvp-form');
-  const fallback = document.getElementById('rsvp-fallback');
-  const summary = document.getElementById('rsvp-summary');
-  
-  if (summary) {
-    summary.textContent = formatRSVPData(data);
-  }
-  
-  form?.style.setProperty('display', 'none');
-  fallback?.style.setProperty('display', 'block');
-  
-  announceToScreenReader('RSVP form submitted. Please copy the details and send them to the couple.');
+  observer.observe(modal, { attributes: true });
 }
 
 /**
@@ -857,11 +951,8 @@ function populateContent() {
   // Gallery
   populateGallery();
   
-  // Travel
-  populateTravel();
-  
-  // Accommodations
-  populateAccommodations();
+  // Stays & Travel
+  populateStaysTravel();
   
   // Attire
   populateAttire();
@@ -927,7 +1018,6 @@ function populateVenue() {
       ceremonyDirections.innerHTML = `
         <a href="${venue.directions.google}" target="_blank" rel="noopener">Open in Google Maps</a>
         <a href="${venue.directions.waze}" target="_blank" rel="noopener">Open in Waze</a>
-        <a href="${venue.directions.apple}" target="_blank" rel="noopener">Open in Apple Maps</a>
       `;
     }
     
@@ -952,7 +1042,6 @@ function populateVenue() {
       receptionDirections.innerHTML = `
         <a href="${venue.directions.google}" target="_blank" rel="noopener">Open in Google Maps</a>
         <a href="${venue.directions.waze}" target="_blank" rel="noopener">Open in Waze</a>
-        <a href="${venue.directions.apple}" target="_blank" rel="noopener">Open in Apple Maps</a>
       `;
     }
     
@@ -983,51 +1072,99 @@ window.openGalleryLightbox = function(index) {
   openLightbox(images, index);
 };
 
-function populateTravel() {
-  const introContainer = document.getElementById('travel-intro');
-  const optionsContainer = document.getElementById('travel-options');
+function populateStaysTravel() {
+  if (!config.staysTravel) return;
   
-  if (!config.travel) return;
-  
-  // Populate intro
-  if (introContainer && config.travel.intro) {
-    introContainer.innerHTML = `<p>${config.travel.intro}</p>`;
+  // Populate Stays section
+  if (config.staysTravel.stays) {
+    updateElement('stays-title', config.staysTravel.stays.title);
+    updateElement('stays-subcopy', config.staysTravel.stays.subcopy);
+    
+    const staysLink = document.getElementById('stays-link');
+    if (staysLink) {
+      staysLink.textContent = config.staysTravel.stays.label;
+      staysLink.href = config.staysTravel.stays.url;
+    }
   }
   
-  // Populate travel options
-  if (optionsContainer && config.travel.options) {
-    optionsContainer.innerHTML = config.travel.options.map(option => `
-      <div class="travel-option">
-        <h3 class="travel-method">${option.method}</h3>
-        <p class="travel-description">${option.description}</p>
-        <p class="travel-duration"><strong>Duration:</strong> ${option.duration}</p>
-      </div>
-    `).join('');
+  // Populate Travel Guide section
+  if (config.staysTravel.travel) {
+    updateElement('travel-title', config.staysTravel.travel.title);
+    updateElement('travel-subcopy', config.staysTravel.travel.subcopy);
+    
+    const travelLinksContainer = document.getElementById('travel-links');
+    if (travelLinksContainer && config.staysTravel.travel.links) {
+      travelLinksContainer.innerHTML = config.staysTravel.travel.links.map(link => `
+        <a class="cta outline" data-embed-link href="${link.url}" role="button" rel="noopener noreferrer">${link.label}</a>
+      `).join('');
+    }
   }
+  
+  // Initialize modal functionality
+  initializeStaysTravelModal();
 }
 
-function populateAccommodations() {
-  const introContainer = document.getElementById('accommodations-intro');
-  const listContainer = document.getElementById('accommodations-list');
+function initializeStaysTravelModal() {
+  const embed = config.staysTravel?.embed;
+  const modal = document.querySelector('.flip-modal');
+  const iframe = modal?.querySelector('iframe');
+  const closeBtn = modal?.querySelector('.close');
   
-  if (!config.accommodations) return;
+  if (!embed || !modal || !iframe || !closeBtn) return;
   
-  // Populate intro
-  if (introContainer && config.accommodations.intro) {
-    introContainer.innerHTML = `<p>${config.accommodations.intro}</p>`;
-  }
+  // Handle embed link clicks
+  const embedLinks = document.querySelectorAll('[data-embed-link]');
+  embedLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (!embed) return;
+      
+      e.preventDefault();
+      
+      // Set iframe source and open modal
+      iframe.src = link.href;
+      iframe.title = `Flip book: ${link.textContent}`;
+      modal.hidden = false;
+      modal.dataset.returnFocus = link;
+      
+      // Focus close button for accessibility
+      closeBtn.focus();
+      
+      // Dispatch analytics event
+      const event = new CustomEvent('external-link:open', {
+        detail: { label: link.textContent, url: link.href }
+      });
+      document.dispatchEvent(event);
+    });
+  });
   
-  // Populate accommodations list
-  if (listContainer && config.accommodations.hotels) {
-    listContainer.innerHTML = config.accommodations.hotels.map(hotel => `
-      <div class="accommodation-item">
-        <h3 class="hotel-name">${hotel.name}</h3>
-        <p class="hotel-distance">${hotel.distance}</p>
-        <p class="hotel-type">${hotel.type}</p>
-        <a href="${hotel.link}" class="hotel-link" target="_blank" rel="noopener">View Details</a>
-      </div>
-    `).join('');
-  }
+  // Close modal function
+  const closeModal = () => {
+    modal.hidden = true;
+    iframe.src = '';
+    
+    // Restore focus to trigger element
+    const returnFocus = modal.dataset.returnFocus;
+    if (returnFocus) {
+      document.querySelector(`[href="${returnFocus}"]`)?.focus();
+    }
+  };
+  
+  // Close button click
+  closeBtn.addEventListener('click', closeModal);
+  
+  // ESC key close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) {
+      closeModal();
+    }
+  });
+  
+  // Backdrop click (if clicking on modal but not iframe)
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
 }
 
 function populateAttire() {
