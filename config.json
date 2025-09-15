@@ -16,14 +16,14 @@
 
   "branding": {
     "nav": {
-      "src": "images/brand/jm-mark.svg",
+      "src": "images/brand/jm-mark@2x.png",
       "srcset": "images/brand/jm-mark@2x.png 2x, images/brand/jm-mark@3x.png 3x",
       "alt": "J & M crest",
       "size": { "desktop": 120, "mobile": 115 },
       "useInvertOnDark": true
     },
     "footer": {
-      "src": "images/brand/jm-mark.svg",
+      "src": "images/brand/jm-mark-footer@2x.png",
       "srcset": "images/brand/jm-mark-footer@2x.png 2x",
       "alt": "J & M crest",
       "size": 150
@@ -40,9 +40,8 @@
   "story": "We met, we laughed, we road-tripped, and said yes. We can't wait to celebrate with you.",
 
   "schedule": [
-    { "title": "CEREMONY", "time": "2:00 PM", "desc": "St. John Marie Vianney Parish" },
-    { "title": "COCKTAILS", "time": "4:00 PM", "desc": "Photos & light refreshments" },
-    { "title": "RECEPTION", "time": "5:00 PM", "desc": "Dinner, toasts & dancing at Fruella's" }
+    { "title": "CEREMONY", "time": "2:00 PM", "desc": "St. John Marie Vianney Parish Church Silang", "note": "The ceremony will begin on time. Your presence at the church is deeply meaningful to us." },
+    { "title": "SOCIALS, DINNER AND DANCING", "time": "4:00 PM", "desc": "Fruella's Events Venue Tagaytay" }
   ],
 
   "venue": {

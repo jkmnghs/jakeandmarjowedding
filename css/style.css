@@ -28,9 +28,9 @@
   --script: var(--cfg-script, 'Great Vibes', cursive);
   
   /* Branding Sizes */
-  --nav-logo-size-desktop: clamp(40px, 2.8vw, 52px);
-  --nav-logo-size-mobile: 36px;
-  --footer-logo-size: 128px;
+  --nav-logo-size-desktop: 120px;
+  --nav-logo-size-mobile: 115px;
+  --footer-logo-size: 150px;
   
   /* Spacing */
   --space-xs: 0.5rem;
@@ -324,7 +324,6 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 }
 
 .brand-logo {
-  filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)) drop-shadow(0 0 3px rgba(0,0,0,.25));
   transition: var(--transition);
   object-fit: contain;
   height: auto;
@@ -407,25 +406,26 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
-  padding: var(--space-sm) 0;
+  padding: var(--space-sm) var(--space-md);
   position: relative;
   transition: var(--transition);
+  border-radius: var(--border-radius-sm);
+}
+
+.nav-menu a:hover {
+  background-color: #ADD8E6;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-menu a.active {
+  background-color: #ADD8E6;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .nav-menu a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary);
-  transition: var(--transition);
-}
-
-.nav-menu a:hover::after,
-.nav-menu a.active::after {
-  width: 100%;
+  display: none;
 }
 
 /* Mobile navigation */
@@ -629,21 +629,30 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 .schedule-time {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.05rem;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.schedule-title {
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.6vw, 1.75rem);
   font-weight: 700;
   color: var(--primary);
   margin-bottom: var(--space-sm);
 }
 
-.schedule-title {
-  font-size: 1.5rem;
-  margin-bottom: var(--space-sm);
-  color: var(--text);
-}
-
 .schedule-desc {
   color: var(--gray-600);
   font-size: 1.1rem;
+}
+
+.schedule-note {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: var(--space-sm);
+  line-height: 1.4;
 }
 
 /* Venue Section */
@@ -1246,7 +1255,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .envelope-card {
   position: absolute;
   left: 50%;
-  top: 35%;
+  top: 45%;
   transform: translate(-50%, -50%);
   width: 70%;
   border-radius: 8px;
@@ -1257,7 +1266,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .rsvp .cta.outline {
   position: absolute;
   left: 50%;
-  top: 35%;
+  top: 45%;
   transform: translate(-50%, -50%);
   display: inline-block;
   padding: 0.8rem 1.4rem;
@@ -1365,13 +1374,13 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   
   .envelope-card {
     width: 68%;
-    top: 32%;
+    top: 42%;
   }
   
   .rsvp .cta.outline {
     padding: 0.6rem 1rem;
     font-size: 0.9rem;
-    top: 32%;
+    top: 42%;
     max-width: 140px;
     white-space: nowrap;
   }

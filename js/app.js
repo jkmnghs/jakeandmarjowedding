@@ -1061,9 +1061,10 @@ function populateSchedule() {
   
   container.innerHTML = config.schedule.map(item => `
     <div class="schedule-item">
-      <div class="schedule-time">${item.time}</div>
       <h3 class="schedule-title">${item.title}</h3>
+      <div class="schedule-time">${item.time}</div>
       <p class="schedule-desc">${item.desc}</p>
+      ${item.note ? `<p class="schedule-note">${item.note}</p>` : ''}
     </div>
   `).join('');
 }
