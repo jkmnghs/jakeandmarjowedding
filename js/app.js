@@ -367,23 +367,27 @@ END:VCALENDAR`;
 }
 
 /**
- * Scroll Animations
+ * Scroll Animations (Reveal on Scroll)
+ * Uses [data-reveal] and .reveal-in, respects reduced motion
  */
 function initializeScrollAnimations() {
-  const animatedElements = document.querySelectorAll('.animate-on-scroll');
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) {
+    // Instantly reveal all
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      el.classList.add('reveal-in');
+    });
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('reveal-in');
+        io.unobserve(e.target);
       }
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-  
-  animatedElements.forEach(el => observer.observe(el));
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 }
 
 /**
