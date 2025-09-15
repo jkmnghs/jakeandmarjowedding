@@ -2548,31 +2548,35 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   opacity: 0.8;
   animation: fall linear infinite;
   transform-origin: center;
+  /* Performance optimizations */
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+  backface-visibility: hidden;
 }
 
 @keyframes fall {
   0% {
-    transform: translateY(-100px) rotateZ(0deg) scale(1);
+    transform: translate3d(0, -100px, 0) rotateZ(0deg) scale(1);
     opacity: 0.8;
   }
   50% {
     opacity: 1;
   }
   100% {
-    transform: translateY(calc(200vh)) rotateZ(360deg) scale(0.8);
+    transform: translate3d(0, calc(200vh), 0) rotateZ(360deg) scale(0.8);
     opacity: 0;
   }
 }
 
 @keyframes sway {
   0%, 100% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   25% {
-    transform: translateX(10px);
+    transform: translate3d(10px, 0, 0);
   }
   75% {
-    transform: translateX(-10px);
+    transform: translate3d(-10px, 0, 0);
   }
 }
 
@@ -2596,20 +2600,46 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   height: 40px;
 }
 
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .falling-petal {
+    animation: none !important;
+    display: none;
+  }
+  
+  .petal-container,
+  .petal-container-sections {
+    display: none;
+  }
+}
+
 /* Responsive petal container */
 @media (max-width: 768px) {
   .falling-petal.small {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
   }
   
   .falling-petal.medium {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
   }
   
   .falling-petal.large {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Reduce sway distance on mobile for smoother performance */
+  @keyframes sway {
+    0%, 100% {
+      transform: translate3d(0, 0, 0);
+    }
+    25% {
+      transform: translate3d(5px, 0, 0);
+    }
+    75% {
+      transform: translate3d(-5px, 0, 0);
+    }
   }
 }

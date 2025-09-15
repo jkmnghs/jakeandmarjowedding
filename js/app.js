@@ -949,11 +949,18 @@ function initializeFallingPetals() {
   if (!config?.decor?.petals?.enabled || !config.decor.petals.images?.length) {
     return;
   }
+  
+  // Respect user's motion preferences
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    console.log('Petals disabled - user prefers reduced motion');
+    return;
+  }
 
   let petalContainer;
   let petalsActive = false;
   let animationFrameId;
   let lastPetalTime = 0;
+  let activePetals = []; // Track active petals for performance
 
   function createPetalContainer() {
     // Remove existing container if it exists
@@ -994,6 +1001,14 @@ function initializeFallingPetals() {
       createPetalContainer();
     }
     
+    // Limit maximum petals for performance
+    const isMobile = window.innerWidth <= 768;
+    const maxPetals = isMobile ? 8 : 15; // Fewer petals on mobile
+    
+    if (activePetals.length >= maxPetals) {
+      return; // Don't create more petals if at limit
+    }
+    
     const petal = document.createElement('div');
     petal.className = 'falling-petal';
     
@@ -1016,22 +1031,31 @@ function initializeFallingPetals() {
     // Always start from the top of the container (no scroll-based positioning)
     petal.style.top = '-100px';
     
-    // Random animation duration (fall speed)
-    const duration = 8 + Math.random() * 12; // 8-20 seconds
+    // Random animation duration (fall speed) - faster on mobile
+    const baseDuration = isMobile ? 6 : 8; // Faster animations on mobile
+    const randomRange = isMobile ? 6 : 12; // Smaller range on mobile
+    const duration = baseDuration + Math.random() * randomRange;
     petal.style.animationDuration = duration + 's';
     
-    // Add sway animation randomly
-    if (Math.random() > 0.5) {
+    // Add sway animation randomly (less often on mobile)
+    const swayChance = isMobile ? 0.3 : 0.5; // 30% on mobile vs 50% on desktop
+    if (Math.random() < swayChance) {
       petal.classList.add('sway');
       petal.style.animationDuration = `${duration}s, ${3 + Math.random() * 4}s`;
     }
     
     petalContainer.appendChild(petal);
+    activePetals.push(petal);
     
     // Remove petal after animation
     setTimeout(() => {
       if (petal.parentNode) {
         petal.parentNode.removeChild(petal);
+      }
+      // Remove from tracking array
+      const index = activePetals.indexOf(petal);
+      if (index > -1) {
+        activePetals.splice(index, 1);
       }
     }, duration * 1000);
   }
@@ -1067,11 +1091,16 @@ function initializeFallingPetals() {
         petalContainer.remove();
         petalContainer = null;
       }
+      activePetals = []; // Clear tracking array
       console.log('Petals deactivated - sections not visible');
     }
     
     // Create new petals periodically when active
-    if (petalsActive && currentTime - lastPetalTime > 750) { // Every 0.75 seconds (doubled rate)
+    // Adjust rate based on device performance
+    const isMobile = window.innerWidth <= 768;
+    const petalInterval = isMobile ? 1500 : 750; // Slower on mobile (1.5s vs 0.75s)
+    
+    if (petalsActive && currentTime - lastPetalTime > petalInterval) {
       createPetal();
       lastPetalTime = currentTime;
     }
