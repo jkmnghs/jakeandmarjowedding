@@ -127,8 +127,9 @@
   ],
 
   "faq": [
-    { "q": "Dress code?", "a": "Garden formal in powder blue, cream, and neutrals." },
-    { "q": "Kids?", "a": "We love your little ones, but this is an adults-only celebration." }
+    { "q": "Can I bring a plus one?", "a": "This is an intimate wedding with limited seating. Kindly note that only named guests in the invitation are included." },
+    { "q": "How do we get to the ceremony and reception venue?", "a": "We recommend coming by car or booking a Grab for convenience. For directions, please refer to the Venue section where you'll find links to Waze and Google Maps for easy navigation." },
+    { "q": "Are there available guest parking slots at the venue?", "a": "Yes, parking slots are available for both the ceremony and reception venue." }
   ],
 
   "rsvp": {
