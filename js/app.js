@@ -505,6 +505,7 @@ function initializeCarousel(carousel) {
   const prevBtn = carousel.querySelector('.carousel-prev');
   const nextBtn = carousel.querySelector('.carousel-next');
   const dotsContainer = carousel.querySelector('.carousel-dots');
+  const carouselContainer = carousel.closest('.carousel-container');
   
   if (!track || !slides.length) return;
   
@@ -513,6 +514,15 @@ function initializeCarousel(carousel) {
   let startX;
   let scrollLeft;
   let isDragging = false;
+  let hasStartedSwiping = false;
+  
+  // Function to hide swipe indicator
+  function hideSwipeIndicator() {
+    if (carouselContainer && !hasStartedSwiping) {
+      hasStartedSwiping = true;
+      carouselContainer.classList.add('swiping-started');
+    }
+  }
   
   // Create dots
   if (dotsContainer) {
@@ -575,6 +585,7 @@ function initializeCarousel(carousel) {
     if (!isDown) return;
     e.preventDefault();
     isDragging = true;
+    hideSwipeIndicator(); // Hide indicator when dragging starts
     const x = e.pageX - track.offsetLeft;
     const walk = (x - startX) * 2;
     track.scrollLeft = scrollLeft - walk;
@@ -590,6 +601,7 @@ function initializeCarousel(carousel) {
   track.addEventListener('touchmove', (e) => {
     if (!isDown) return;
     isDragging = true;
+    hideSwipeIndicator(); // Hide indicator when swiping starts
     const x = e.touches[0].pageX - track.offsetLeft;
     const walk = (x - startX) * 2;
     track.scrollLeft = scrollLeft - walk;
@@ -600,6 +612,11 @@ function initializeCarousel(carousel) {
     if (isDragging) {
       setTimeout(() => { isDragging = false; }, 100);
     }
+  });
+  
+  // Hide indicator on scroll (for programmatic scrolling)
+  track.addEventListener('scroll', () => {
+    hideSwipeIndicator();
   });
   
   // Intersection Observer for dots
@@ -926,6 +943,156 @@ function trapFocusInModal(modal) {
 }
 
 /**
+ * Falling Petals Animation System
+ */
+function initializeFallingPetals() {
+  if (!config?.decor?.petals?.enabled || !config.decor.petals.images?.length) {
+    return;
+  }
+
+  let petalContainer;
+  let petalsActive = false;
+  let animationFrameId;
+  let lastPetalTime = 0;
+
+  function createPetalContainer() {
+    // Remove existing container if it exists
+    if (petalContainer) {
+      petalContainer.remove();
+    }
+    
+    const scheduleSection = document.getElementById('schedule');
+    const venueSection = document.getElementById('venue');
+    
+    if (!scheduleSection || !venueSection) return;
+    
+    // Calculate the combined height of timeline and venue sections
+    const scheduleHeight = scheduleSection.offsetHeight;
+    const venueHeight = venueSection.offsetHeight;
+    const totalHeight = scheduleHeight + venueHeight;
+    
+    // Create container positioned relative to the timeline section
+    petalContainer = document.createElement('div');
+    petalContainer.className = 'petal-container-sections';
+    petalContainer.style.position = 'absolute';
+    petalContainer.style.top = '0';
+    petalContainer.style.left = '0';
+    petalContainer.style.right = '0';
+    petalContainer.style.width = '100%';
+    petalContainer.style.height = totalHeight + 'px';
+    petalContainer.style.pointerEvents = 'none';
+    petalContainer.style.zIndex = '900'; // Below navigation (1000)
+    petalContainer.style.overflow = 'hidden';
+    
+    // Append to schedule section so petals start from timeline
+    scheduleSection.style.position = 'relative';
+    scheduleSection.appendChild(petalContainer);
+  }
+
+  function createPetal() {
+    if (!petalContainer) {
+      createPetalContainer();
+    }
+    
+    const petal = document.createElement('div');
+    petal.className = 'falling-petal';
+    
+    // Random petal image
+    const images = config.decor.petals.images;
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    petal.style.backgroundImage = `url('${randomImage}')`;
+    petal.style.backgroundSize = 'contain';
+    petal.style.backgroundRepeat = 'no-repeat';
+    petal.style.backgroundPosition = 'center';
+    
+    // Random size
+    const sizes = ['small', 'medium', 'large'];
+    const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+    petal.classList.add(randomSize);
+    
+    // Random horizontal position
+    petal.style.left = Math.random() * 100 + '%';
+    
+    // Always start from the top of the container (no scroll-based positioning)
+    petal.style.top = '-100px';
+    
+    // Random animation duration (fall speed)
+    const duration = 8 + Math.random() * 12; // 8-20 seconds
+    petal.style.animationDuration = duration + 's';
+    
+    // Add sway animation randomly
+    if (Math.random() > 0.5) {
+      petal.classList.add('sway');
+      petal.style.animationDuration = `${duration}s, ${3 + Math.random() * 4}s`;
+    }
+    
+    petalContainer.appendChild(petal);
+    
+    // Remove petal after animation
+    setTimeout(() => {
+      if (petal.parentNode) {
+        petal.parentNode.removeChild(petal);
+      }
+    }, duration * 1000);
+  }
+
+  function shouldShowPetals() {
+    const scheduleSection = document.getElementById('schedule');
+    const venueSection = document.getElementById('venue');
+    
+    if (!scheduleSection || !venueSection) return false;
+    
+    const scheduleRect = scheduleSection.getBoundingClientRect();
+    const venueRect = venueSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Show petals when either timeline or venue section is visible
+    const scheduleVisible = scheduleRect.top < windowHeight && scheduleRect.bottom > 0;
+    const venueVisible = venueRect.top < windowHeight && venueRect.bottom > 0;
+    
+    return scheduleVisible || venueVisible;
+  }
+
+  function animatePetals(currentTime) {
+    const shouldShow = shouldShowPetals();
+    
+    if (shouldShow && !petalsActive) {
+      petalsActive = true;
+      createPetalContainer();
+      console.log('Petals activated - sections visible');
+    } else if (!shouldShow && petalsActive) {
+      petalsActive = false;
+      // Clean up petals when deactivating
+      if (petalContainer) {
+        petalContainer.remove();
+        petalContainer = null;
+      }
+      console.log('Petals deactivated - sections not visible');
+    }
+    
+    // Create new petals periodically when active
+    if (petalsActive && currentTime - lastPetalTime > 750) { // Every 0.75 seconds (doubled rate)
+      createPetal();
+      lastPetalTime = currentTime;
+    }
+    
+    animationFrameId = requestAnimationFrame(animatePetals);
+  }
+
+  // Start animation with a small delay to ensure page is loaded
+  setTimeout(() => {
+    animationFrameId = requestAnimationFrame(animatePetals);
+  }, 1000);
+  
+  // Cleanup function
+  window.addEventListener('beforeunload', () => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+  });
+}
+
+/**
  * Content Population
  */
 function populateContent() {
@@ -970,6 +1137,9 @@ function populateContent() {
   
   // Initialize Add to Calendar
   initializeAddToCalendar();
+  
+  // Initialize falling petals animation
+  initializeFallingPetals();
 }
 
 function updateElement(id, content) {

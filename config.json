@@ -155,5 +155,22 @@
     "script": "'Great Vibes', cursive",
     "radius": "16px",
     "shadow": "0 8px 24px rgba(0,0,0,.06)"
+  },
+
+  "decor": {
+    "flowerBackground": {
+      "enabled": true,
+      "image": "images/decor/flower-bg.png"
+    },
+    "petals": {
+      "enabled": true,
+      "images": [
+        "images/decor/petal1.png",
+        "images/decor/petal2.png",
+        "images/decor/petal3.png",
+        "images/decor/petal4.png",
+        "images/decor/petal5.png"
+      ]
+    }
   }
 }

@@ -44,9 +44,9 @@
   
   /* Layout */
   --container-width: 1200px;
-  --border-radius: 0;
-  --border-radius-sm: 0;
-  --border-radius-lg: 0;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 16px;
   
   /* Shadows */
   --shadow: 0 8px 24px rgba(0,0,0,.06);
@@ -614,12 +614,14 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 }
 
 .schedule-item {
-  background: white;
+  background: rgba(255, 255, 255, 0.1); /* Made transparent with slight white tint */
   padding: var(--space-2xl);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow);
   text-align: center;
   transition: var(--transition);
+  backdrop-filter: blur(5px); /* Added subtle blur effect */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
 }
 
 .schedule-item:hover {
@@ -657,7 +659,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 /* Venue Section */
 .venue {
-  background: white;
+  background: transparent; /* Changed from white to transparent */
 }
 
 .venue-grid {
@@ -761,7 +763,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 /* Stays & Travel Section */
 .stays-travel {
-  background: white;
+  background: transparent;
 }
 
 .stays-travel .block {
@@ -924,19 +926,26 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 .attire-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-3xl);
   margin-bottom: var(--space-2xl);
+}
+
+.attire-section {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  height: 100%;
 }
 
 .attire-section h3 {
   text-align: center;
   color: var(--primary);
   margin-bottom: var(--space-lg);
-  min-height: 2.5rem;
+  min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-row: 1;
 }
 
 .attire-guidelines {
@@ -944,31 +953,41 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   color: var(--gray-600);
   margin-bottom: var(--space-xl);
   font-style: italic;
-  min-height: 3rem;
+  min-height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-row: 2;
+  padding: 0 var(--space-md);
+}
+
+.carousel-container {
+  grid-row: 3;
+  align-self: stretch;
 }
 
 .carousel-container {
   position: relative;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
 }
 
 .carousel {
   position: relative;
   overflow: hidden;
   border-radius: var(--border-radius-lg);
-  background: var(--gray-100);
+  background: transparent;
 }
 
 .carousel-track {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  gap: var(--space-sm);
-  padding: var(--space-sm);
+  gap: 0;
+  padding: 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -976,41 +995,90 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 }
 
 .carousel-slide {
-  flex: 0 0 calc(100% - var(--space-sm));
+  flex: 0 0 100%;
   scroll-snap-align: center;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   aspect-ratio: 3 / 4;
+  position: relative;
+  background: transparent;
 }
 
 .carousel-slide:hover {
   transform: scale(1.02);
 }
 
+.carousel-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: var(--border-radius-lg);
+}
+
+.carousel-slide:hover::before {
+  opacity: 1;
+}
+
 .carousel-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: var(--border-radius-lg);
+}
+
+.carousel-slide:hover img {
+  transform: scale(1.05);
+}
+
+.carousel-slide::before {
+  border-radius: var(--border-radius-lg);
+}
+
+/* Loading state for carousel images */
+.carousel-slide img:not([src]) {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 0;
-  width: 44px;
-  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
   opacity: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .carousel:hover .carousel-btn {
@@ -1020,35 +1088,70 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .carousel-btn:hover {
   background: white;
   transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.carousel-btn:hover svg {
+  transform: scale(1.1);
 }
 
 .carousel-prev {
-  left: var(--space-md);
+  left: var(--space-lg);
 }
 
 .carousel-next {
-  right: var(--space-md);
+  right: var(--space-lg);
 }
 
 .carousel-dots {
   display: flex;
   justify-content: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-lg);
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  padding: var(--space-md);
 }
 
 .carousel-dot {
   width: 12px;
   height: 12px;
-  border-radius: 0;
-  border: none;
-  background: var(--gray-300);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background: transparent;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.carousel-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .carousel-dot[aria-current="true"] {
-  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.carousel-dot[aria-current="true"]::before {
+  opacity: 1;
+}
+
+.carousel-dot:hover {
+  border-color: var(--primary);
+  transform: scale(1.1);
 }
 
 .carousel-overlay {
@@ -1095,18 +1198,46 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 /* Desktop carousel alignment */
 @media (min-width: 768px) {
   .attire-grid {
-    align-items: start;
     grid-template-columns: 1fr 1fr;
+    align-items: stretch;
   }
   
   .attire-section {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 60px 80px 1fr;
+    height: 100%;
+  }
+  
+  .attire-section h3 {
+    min-height: 60px;
+    margin-bottom: 0;
+  }
+  
+  .attire-guidelines {
+    min-height: 80px;
+    margin-bottom: 0;
   }
   
   .carousel-container {
-    min-height: 400px;
-    margin-top: auto;
+    margin-top: var(--space-xl);
+    border-radius: var(--border-radius-lg);
+  }
+  
+  /* Ensure curved edges on desktop - more specific selectors */
+  .carousel-container .carousel-slide {
+    border-radius: var(--border-radius-lg) !important;
+  }
+  
+  .carousel-container .carousel-slide img {
+    border-radius: var(--border-radius-lg) !important;
+  }
+  
+  .carousel-container .carousel-slide::before {
+    border-radius: var(--border-radius-lg) !important;
+  }
+  
+  .carousel-container .carousel {
+    border-radius: var(--border-radius-lg);
   }
 }
 
@@ -1147,7 +1278,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 /* FAQ Section */
 .faq {
-  background: white;
+  background: transparent;
 }
 
 .faq-list {
@@ -1431,6 +1562,18 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .footer-copyright {
   color: var(--gray-400);
   font-size: 0.9rem;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Target the actual copyright paragraph in footer */
+.footer .container > p {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Back to Top Button */
@@ -1696,8 +1839,166 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   }
   
   .attire-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-2xl);
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: stretch;
+  }
+  
+  .attire-section {
+    display: grid;
+    grid-template-rows: 50px 70px 1fr;
+    height: 100%;
+  }
+  
+  .attire-section h3 {
+    min-height: 50px;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
+  
+  .attire-guidelines {
+    min-height: 70px;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    padding: 0 var(--space-sm);
+  }
+  
+  .carousel-container {
+    border-radius: var(--border-radius);
+    position: relative;
+  }
+  
+  /* Hide navigation buttons on mobile */
+  .carousel-btn {
+    display: none;
+  }
+  
+  /* Add swipe indicator */
+  .carousel-container::after {
+    content: 'SWIPE TO VIEW';
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Hide swipe indicator after swiping starts */
+  .carousel-container.swiping-started::after {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+  
+  .carousel-slide {
+    flex: 0 0 100%;
+    border-radius: var(--border-radius);
+  }
+  
+  .carousel-slide:hover {
+    transform: scale(1.01);
+  }
+  
+  .carousel-slide img {
+    border-radius: var(--border-radius);
+  }
+  
+  /* Fix text wrapping issues */
+  .attire-guidelines {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    padding: 0 var(--space-xs);
+    text-align: center;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Improve dots for mobile */
+  .carousel-dots {
+    margin-top: var(--space-md);
+    padding: var(--space-sm);
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-width: 2px;
+    min-width: 10px;
+    min-height: 10px;
+  }
+  
+  /* Touch-friendly spacing */
+  .carousel-track {
+    padding: 0;
+    gap: 0;
+  }
+}
+
+/* Extra small mobile devices - enhanced touch targets */
+@media (max-width: 480px) {
+  /* Buttons are hidden on mobile, so no button styles needed */
+  
+  .carousel-slide {
+    border-radius: 12px;
+  }
+  
+  .carousel-slide img {
+    border-radius: 12px;
+  }
+  
+  .carousel-slide::before {
+    border-radius: 12px;
+  }
+  
+  /* Better text handling for very small screens */
+  .attire-guidelines {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    padding: 0;
+    margin-bottom: var(--space-md);
+  }
+  
+  /* Optimize dots for small screens */
+  .carousel-dots {
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+  
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+  }
+  
+  /* Smaller swipe indicator */
+  .carousel-container::after {
+    font-size: 0.7rem;
+    padding: var(--space-xs) var(--space-md);
+    top: var(--space-sm);
+    right: var(--space-sm);
+    border-radius: 16px;
+    letter-spacing: 0.3px;
+  }
+  
+  /* Hide swipe indicator after swiping starts - mobile */
+  .carousel-container.swiping-started::after {
+    opacity: 0;
+    transform: translateY(-8px);
   }
   
   .gallery-grid {
@@ -2130,5 +2431,185 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
     left: -40px;
     width: 40px;
     height: 40px;
+  }
+}
+
+/* ===== Floral band using PNG ===== */
+/* Continuous Flower Background spanning Schedule and Venue */
+.schedule.section {
+  position: relative;
+}
+
+/* Create a wrapper that spans both sections */
+.schedule.section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(700px, 85vw); /* Increased from 500px to 700px */
+  height: 400vh; /* Reverted back to previous setting */
+  background-image: url("../images/decor/flower-bg.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% auto; /* Full width, auto height */
+  opacity: 1; /* Removed opacity - fully visible */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.venue.section {
+  position: relative;
+  z-index: 1;
+  background: transparent; /* Ensure no background blocks flower */
+}
+
+/* Ensure content is above flower background */
+.schedule .container,
+.venue .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mobile adjustments for flower background */
+@media (max-width: 768px) {
+  .schedule.section::after {
+    width: min(500px, 90vw); /* Increased from 350px to 500px */
+    opacity: 1; /* Removed opacity - fully visible on mobile too */
+    height: 350vh; /* Reverted back to previous setting */
+    background-size: 100% auto;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .schedule.section::after {
+    width: min(600px, 85vw); /* Increased from 450px to 600px */
+    height: 380vh; /* Reverted back to previous setting */
+    background-size: 100% auto;
+  }
+}
+
+.floral-bg {
+  position: relative;
+  isolation: isolate;
+}
+.floral-bg::before{
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background-image: var(--floral-bg-url, url("../images/decor/flower-bg.png"));
+  background-repeat:no-repeat;
+  background-position: center top;
+  background-size: min(900px, 90vw) auto;
+  opacity:.14;                 /* subtle default */
+  pointer-events:none;
+}
+
+/* Blend helpers for opaque/white-backed PNGs */
+.floral-bg.blend-multiply::before { mix-blend-mode: multiply; opacity:.22; }
+.floral-bg.blend-screen::before   { mix-blend-mode: screen;   opacity:.16; }
+.floral-bg.blend-normal::before   { mix-blend-mode: normal;   opacity:.14; }
+
+/* Mobile tweak */
+@media (max-width:768px){
+  .floral-bg::before{
+    background-position:center 2rem;
+    background-size:min(640px,95vw) auto;
+    opacity:.18;
+  }
+}
+
+/* Falling Petals Animation */
+.petal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 900; /* Below navigation (1000) */
+  overflow: hidden;
+}
+
+/* Sectioned petal container for timeline and venue */
+.petal-container-sections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 900; /* Below navigation (1000) */
+  overflow: hidden;
+}
+
+.falling-petal {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: fall linear infinite;
+  transform-origin: center;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotateZ(0deg) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(calc(200vh)) rotateZ(360deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+}
+
+.falling-petal.sway {
+  animation: fall linear infinite, sway ease-in-out infinite;
+}
+
+/* Different petal sizes */
+.falling-petal.small {
+  width: 20px;
+  height: 20px;
+}
+
+.falling-petal.medium {
+  width: 30px;
+  height: 30px;
+}
+
+.falling-petal.large {
+  width: 40px;
+  height: 40px;
+}
+
+/* Responsive petal container */
+@media (max-width: 768px) {
+  .falling-petal.small {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .falling-petal.medium {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .falling-petal.large {
+    width: 30px;
+    height: 30px;
   }
 }
