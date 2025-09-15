@@ -1718,3 +1718,41 @@ setTimeout(() => {
     heroBg.style.backgroundPosition = 'center center';
   }
 }, 2000);
+
+  /* ===== Social teaser video: autoplay when visible, respect reduced motion ===== */
+  (function setupSocialVideo(){
+    const video = document.querySelector('#social .social-video');
+    if (!video) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // If user prefers reduced motion: no autoplay, show play button.
+    const btn = document.querySelector('#social .social-play');
+    if (prefersReduced) {
+      if (btn) btn.hidden = false;
+      video.removeAttribute('loop');
+      // Optional: add controls when user hits play
+      btn?.addEventListener('click', () => {
+        video.muted = false;   // let them hear audio if your clip has it
+        video.controls = true; // give controls in reduced-motion mode
+        video.play();
+        btn.hidden = true;
+      });
+      return; // no IO observer
+    }
+
+    // Autoplay muted & playsinline when the video is in view; pause when out.
+    video.muted = true;
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if (e.isIntersecting) { video.play().catch(()=>{}); }
+        else { video.pause(); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(video);
+
+    // Allow user to tap for controls without breaking autoplay
+    video.addEventListener('pointerdown', () => {
+      video.controls = true; // show controls on demand
+    });
+  })();
