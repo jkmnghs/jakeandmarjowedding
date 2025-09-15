@@ -969,14 +969,11 @@ function initializeFallingPetals() {
     }
     
     const scheduleSection = document.getElementById('schedule');
-    const venueSection = document.getElementById('venue');
     
-    if (!scheduleSection || !venueSection) return;
+    if (!scheduleSection) return;
     
-    // Calculate the combined height of timeline and venue sections
+    // Calculate the height of timeline section only
     const scheduleHeight = scheduleSection.offsetHeight;
-    const venueHeight = venueSection.offsetHeight;
-    const totalHeight = scheduleHeight + venueHeight;
     
     // Create container positioned relative to the timeline section
     petalContainer = document.createElement('div');
@@ -986,7 +983,7 @@ function initializeFallingPetals() {
     petalContainer.style.left = '0';
     petalContainer.style.right = '0';
     petalContainer.style.width = '100%';
-    petalContainer.style.height = totalHeight + 'px';
+    petalContainer.style.height = scheduleHeight + 'px';
     petalContainer.style.pointerEvents = 'none';
     petalContainer.style.zIndex = '900'; // Below navigation (1000)
     petalContainer.style.overflow = 'hidden';
@@ -1003,7 +1000,7 @@ function initializeFallingPetals() {
     
     // Limit maximum petals for performance
     const isMobile = window.innerWidth <= 768;
-    const maxPetals = isMobile ? 8 : 15; // Fewer petals on mobile
+    const maxPetals = isMobile ? 5 : 8; // Even fewer petals (5 mobile, 8 desktop)
     
     if (activePetals.length >= maxPetals) {
       return; // Don't create more petals if at limit
@@ -1062,19 +1059,16 @@ function initializeFallingPetals() {
 
   function shouldShowPetals() {
     const scheduleSection = document.getElementById('schedule');
-    const venueSection = document.getElementById('venue');
     
-    if (!scheduleSection || !venueSection) return false;
+    if (!scheduleSection) return false;
     
     const scheduleRect = scheduleSection.getBoundingClientRect();
-    const venueRect = venueSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     
-    // Show petals when either timeline or venue section is visible
+    // Show petals when timeline section is visible
     const scheduleVisible = scheduleRect.top < windowHeight && scheduleRect.bottom > 0;
-    const venueVisible = venueRect.top < windowHeight && venueRect.bottom > 0;
     
-    return scheduleVisible || venueVisible;
+    return scheduleVisible;
   }
 
   function animatePetals(currentTime) {
@@ -1098,7 +1092,7 @@ function initializeFallingPetals() {
     // Create new petals periodically when active
     // Adjust rate based on device performance
     const isMobile = window.innerWidth <= 768;
-    const petalInterval = isMobile ? 1500 : 750; // Slower on mobile (1.5s vs 0.75s)
+    const petalInterval = isMobile ? 4000 : 3000; // Much longer intervals (4s mobile, 3s desktop)
     
     if (petalsActive && currentTime - lastPetalTime > petalInterval) {
       createPetal();
@@ -1145,9 +1139,6 @@ function populateContent() {
   
   // Schedule
   populateSchedule();
-  
-  // Venue
-  populateVenue();
   
   // Gallery
   populateGallery();
@@ -1258,64 +1249,67 @@ function populateSchedule() {
   const container = document.getElementById('schedule-grid');
   if (!container || !config.schedule) return;
   
-  container.innerHTML = config.schedule.map(item => `
-    <div class="schedule-item">
-      <h3 class="schedule-title">${item.title}</h3>
-      <div class="schedule-time">${item.time}</div>
-      <p class="schedule-desc">${item.desc}</p>
-      ${item.note ? `<p class="schedule-note">${item.note}</p>` : ''}
-    </div>
-  `).join('');
-}
-
-function populateVenue() {
-  // Ceremony venue
-  if (config.venue?.ceremony) {
-    const venue = config.venue.ceremony;
-    updateElement('ceremony-label', venue.label);
+  container.innerHTML = config.schedule.map(item => {
+    let mapButtons = '';
     
-    const ceremonyMap = document.getElementById('ceremony-map');
-    if (ceremonyMap && venue.gmapsQuery) {
-      ceremonyMap.src = `https://www.google.com/maps?q=${encodeURIComponent(venue.gmapsQuery)}&z=16&output=embed`;
-    }
-    
-    const ceremonyDirections = document.getElementById('ceremony-directions');
-    if (ceremonyDirections && venue.directions) {
-      ceremonyDirections.innerHTML = `
-        <a href="${venue.directions.google}" target="_blank" rel="noopener">Open in Google Maps</a>
-        <a href="${venue.directions.waze}" target="_blank" rel="noopener">Open in Waze</a>
+    // Add ceremony map buttons for CEREMONY card
+    if (item.title === 'CEREMONY' && config.venue?.ceremony?.directions) {
+      mapButtons = `
+        <div class="cta-row">
+          <a href="${config.venue.ceremony.directions.google}" 
+             class="cta outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            GOOGLE MAPS
+          </a>
+          <a href="${config.venue.ceremony.directions.waze}" 
+             class="cta outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            WAZE
+          </a>
+        </div>
       `;
     }
     
-    const ceremonyNotes = document.getElementById('ceremony-notes');
-    if (ceremonyNotes && venue.notes) {
-      ceremonyNotes.innerHTML = venue.notes.map(note => `<li>${note}</li>`).join('');
-    }
-  }
-  
-  // Reception venue
-  if (config.venue?.reception) {
-    const venue = config.venue.reception;
-    updateElement('reception-label', venue.label);
-    
-    const receptionMap = document.getElementById('reception-map');
-    if (receptionMap && venue.gmapsQuery) {
-      receptionMap.src = `https://www.google.com/maps?q=${encodeURIComponent(venue.gmapsQuery)}&z=16&output=embed`;
-    }
-    
-    const receptionDirections = document.getElementById('reception-directions');
-    if (receptionDirections && venue.directions) {
-      receptionDirections.innerHTML = `
-        <a href="${venue.directions.google}" target="_blank" rel="noopener">Open in Google Maps</a>
-        <a href="${venue.directions.waze}" target="_blank" rel="noopener">Open in Waze</a>
+    // Add reception map buttons for SOCIALS, DINNER AND DANCING card
+    if (item.title === 'SOCIALS, DINNER AND DANCING' && config.venue?.reception?.directions) {
+      mapButtons = `
+        <div class="cta-row">
+          <a href="${config.venue.reception.directions.google}" 
+             class="cta outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            GOOGLE MAPS
+          </a>
+          <a href="${config.venue.reception.directions.waze}" 
+             class="cta outline" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            WAZE
+          </a>
+        </div>
       `;
     }
     
-    const receptionNotes = document.getElementById('reception-notes');
-    if (receptionNotes && venue.notes) {
-      receptionNotes.innerHTML = venue.notes.map(note => `<li>${note}</li>`).join('');
-    }
-  }
+    return `
+      <div class="schedule-item">
+        <h2>${item.title}</h2>
+        <h3>${item.time}</h3>
+        <p class="schedule-desc">${item.desc}</p>
+        ${item.note ? `<p class="schedule-note">${item.note}</p>` : ''}
+        ${mapButtons}
+      </div>
+    `;
+  }).join('');
 }
 
 function populateGallery() {
@@ -1503,13 +1497,11 @@ function populateAttire() {
 }
 
 function populateRegistry() {
-  const container = document.getElementById('registry-grid');
+  const container = document.getElementById('registry-links');
   if (!container || !config.registry) return;
   
   container.innerHTML = config.registry.map(item => `
-    <a href="${item.url}" class="registry-item" target="_blank" rel="noopener">
-      ${item.label}
-    </a>
+    <a class="cta outline" href="${item.url}" role="button" target="_blank" rel="noopener">${item.label}</a>
   `).join('');
 }
 
