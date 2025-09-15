@@ -1,3 +1,7 @@
+/* Make the Social section title a bit smaller */
+#social h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+}
 /* Reveal on scroll animation */
 [data-reveal] {
   opacity: 0;
@@ -2696,3 +2700,40 @@ body > *:last-child {
     display: none !important;
   }
 }
+
+  /* Instagram follow block */
+  .social { text-align:center; margin: clamp(3rem, 8vw, 6rem) auto; }
+  .social .container { max-width: min(92vw, 720px); margin-inline:auto; }
+  .social h2 { font-family: var(--serif); letter-spacing:.06em; }
+  .social .sub { color:#555; margin:.25rem 0 1.25rem; }
+  .social .handle a { font-weight:700; text-decoration:none; color:var(--primary,#6B7AA1); border-bottom:1px solid currentColor; padding-bottom:2px; }
+  .social .handle a:hover { color:#0D2233; background:var(--pale-blue,#BFD4E5); }
+
+  .social-media { margin: 1.25rem auto 1.75rem; position:relative; }
+  .social-video {
+    display:block;
+    width:min(90vw, 260px);
+    margin-left:auto;
+    margin-right:auto;
+    aspect-ratio: 3 / 2;
+    height:auto;
+    border-radius:12px;
+    box-shadow: var(--shadow, 0 8px 24px rgba(0,0,0,.06));
+    background:#000; /* while poster loads */
+    object-fit: cover;
+  }
+  .social-play {
+    position:absolute; inset:auto 0 12px 0; margin-inline:auto;
+    width:56px; height:56px; border-radius:50%;
+    border:1px solid #fff; background:rgba(0,0,0,.35); color:#fff;
+    display:grid; place-items:center; font-size:1.2rem; cursor:pointer;
+  }
+
+  /* Divider above */
+  #social { position:relative; }
+  #social::before{ content:""; position:absolute; left:50%; top:-1.5rem; transform:translateX(-50%); width:120px; height:1px; background: color-mix(in oklab, #000 25%, transparent); opacity:.15; }
+
+  /* Reduced motion: don’t autoplay; show play button */
+  @media (prefers-reduced-motion: reduce) {
+    .social-play { display:block; }
+  }
