@@ -4,38 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Jake & Marjo Wedding – December 12, 2025</title>
-  <meta name="description" content="Join us for our wedding celebration in Silang & Tagaytay, Cavite on December 12, 2025. RSVP and find all the details you need.">
-  <meta name="keywords" content="wedding, Jake, Marjo, December 2025, Silang, Tagaytay, Cavite">
-  <link rel="canonical" href="https://jakeandmarjowedding.com">
+  <link rel="canonical" href="https://jakeandmarjowedding.com/">
+  <meta name="description" content="Join us in Silang & Tagaytay, Cavite — details, maps, attire & RSVP.">
   
-  <!-- Google Fonts -->
+  <!-- Fonts (Display + Serif + Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
   
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Jake & Marjo — December 12, 2025">
+  <meta property="og:description" content="Join us in Silang & Tagaytay, Cavite — details, maps, attire & RSVP.">
+  <meta property="og:image" content="https://jakeandmarjowedding.com/images/og.jpg">
+  <meta property="og:url" content="https://jakeandmarjowedding.com/">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jakeandmarjowedding.com">
-  <meta property="og:title" content="Jake & Marjo Wedding – December 12, 2025">
-  <meta property="og:description" content="Join us for our wedding celebration in Silang & Tagaytay, Cavite">
-  <meta property="og:image" content="https://jakeandmarjowedding.com/images/og-image.jpg">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://jakeandmarjowedding.com">
-  <meta property="twitter:title" content="Jake & Marjo Wedding – December 12, 2025">
-  <meta property="twitter:description" content="Join us for our wedding celebration in Silang & Tagaytay, Cavite">
-  <meta property="twitter:image" content="https://jakeandmarjowedding.com/images/og-image.jpg">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta name="twitter:card" content="summary_large_image">
   
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
@@ -48,6 +36,24 @@
       }
     }
   </style>
+  
+  <!-- JSON-LD: Wedding Event -->
+  <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "Event",
+   "name": "Jake & Marjo Wedding",
+   "startDate": "2025-12-12T15:00:00+08:00",
+   "eventStatus": "https://schema.org/EventScheduled",
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "location": [
+     {"@type": "Place", "name": "St. John Marie Vianney Parish", "address": "Lalaan II, Silang, Cavite"},
+     {"@type": "Place", "name": "Fruella's Events Venue Tagaytay", "address": "144 Daang Luma, Brgy. Salaban, Amadeo, Cavite"}
+   ],
+   "image": "https://jakeandmarjowedding.com/images/og.jpg",
+   "description": "Wedding details, venue maps, attire, RSVP."
+  }
+  </script>
 </head>
 <body>
   <!-- Skip to main content -->
@@ -211,16 +217,9 @@
       <div class="container">
         <h2>GUEST ATTIRE</h2>
         
-        <div class="attire-palette" id="attire-palette">
-          <!-- Color palette will be populated by JS -->
-        </div>
-        
         <div class="attire-grid">
           <div class="attire-section">
             <h3 id="women-title">WOMEN</h3>
-            <div class="attire-palette" id="women-palette">
-              <!-- Women's color palette will be populated by JS -->
-            </div>
             <p class="attire-guidelines" id="women-guidelines">Strictly long formal gown — Pale Blue, Pale Gray, Pale Green.</p>
             <div class="carousel-container">
               <div class="carousel" id="women-carousel" aria-label="Women's attire examples">
@@ -240,17 +239,12 @@
                 <div class="carousel-dots" id="women-dots" role="tablist" aria-label="Slide navigation">
                   <!-- Dots will be populated by JS -->
                 </div>
-                <div class="swipe-hint" aria-hidden="true">SWIPE TO VIEW</div>
               </div>
-              <div class="carousel-overlay">FOR THE LADIES</div>
             </div>
           </div>
           
           <div class="attire-section">
             <h3 id="men-title">GENTLEMEN</h3>
-            <div class="attire-palette" id="men-palette">
-              <!-- Men's color palette will be populated by JS -->
-            </div>
             <p class="attire-guidelines" id="men-guidelines">Black formal suit with white dress shirt, black bow tie or neck tie, and black shoes.</p>
             <div class="carousel-container">
               <div class="carousel" id="men-carousel" aria-label="Men's attire examples">
@@ -270,9 +264,7 @@
                 <div class="carousel-dots" id="men-dots" role="tablist" aria-label="Slide navigation">
                   <!-- Dots will be populated by JS -->
                 </div>
-                <div class="swipe-hint" aria-hidden="true">SWIPE TO VIEW</div>
               </div>
-              <div class="carousel-overlay">FOR THE GENTLEMEN</div>
             </div>
           </div>
         </div>

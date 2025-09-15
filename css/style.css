@@ -848,21 +848,24 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 2rem;
-  background: transparent;
+  background: none;
   border: none;
-  color: #fff;
+  color: white !important;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.15s ease;
-  opacity: 0.7;
+  padding: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-radius: 4px;
+  transition: var(--transition);
+  font-size: 2rem;
+  opacity: 1;
+}
+
+.flip-modal .close svg {
+  stroke: white !important;
 }
 
 .flip-modal .close:hover {
-  background: var(--secondary);
-  color: var(--primary);
-  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .flip-modal .close:focus {
@@ -1319,21 +1322,24 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 2rem;
-  background: transparent;
+  background: none;
   border: none;
-  color: #fff;
+  color: white !important;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.15s ease;
-  opacity: 0.7;
+  padding: var(--space-sm);
+  margin-bottom: var(--space-md);
+  border-radius: 4px;
+  transition: var(--transition);
+  font-size: 2rem;
+  opacity: 1;
+}
+
+.rsvp-modal .close svg {
+  stroke: white !important;
 }
 
 .rsvp-modal .close:hover {
-  background: var(--secondary);
-  color: var(--primary);
-  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .rsvp-modal .close:focus {
@@ -1486,15 +1492,20 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 .lightbox-close {
   position: absolute;
-  top: -50px;
+  top: -60px;
   right: 0;
   background: none;
   border: none;
-  color: white;
+  color: white !important;
   cursor: pointer;
   padding: var(--space-sm);
-  border-radius: 50%;
+  margin-bottom: var(--space-md);
+  border-radius: 4px;
   transition: var(--transition);
+}
+
+.lightbox-close svg {
+  stroke: white !important;
 }
 
 .lightbox-close:hover {
