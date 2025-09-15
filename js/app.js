@@ -1003,7 +1003,7 @@ function initializeFallingPetals() {
     
     // Limit maximum petals for performance
     const isMobile = window.innerWidth <= 768;
-    const maxPetals = isMobile ? 8 : 15; // Fewer petals on mobile
+    const maxPetals = isMobile ? 5 : 8; // Even fewer petals (5 mobile, 8 desktop)
     
     if (activePetals.length >= maxPetals) {
       return; // Don't create more petals if at limit
@@ -1031,9 +1031,9 @@ function initializeFallingPetals() {
     // Always start from the top of the container (no scroll-based positioning)
     petal.style.top = '-100px';
     
-    // Random animation duration (fall speed) - faster on mobile
-    const baseDuration = isMobile ? 6 : 8; // Faster animations on mobile
-    const randomRange = isMobile ? 6 : 12; // Smaller range on mobile
+    // Random animation duration (fall speed) - faster on mobile for better performance
+    const baseDuration = isMobile ? 4 : 6; // Faster on mobile (4-7s vs 6-18s)
+    const randomRange = isMobile ? 3 : 12; // Smaller range on mobile
     const duration = baseDuration + Math.random() * randomRange;
     petal.style.animationDuration = duration + 's';
     
@@ -1098,7 +1098,7 @@ function initializeFallingPetals() {
     // Create new petals periodically when active
     // Adjust rate based on device performance
     const isMobile = window.innerWidth <= 768;
-    const petalInterval = isMobile ? 1500 : 750; // Slower on mobile (1.5s vs 0.75s)
+    const petalInterval = isMobile ? 4000 : 3000; // Much longer intervals (4s mobile, 3s desktop)
     
     if (petalsActive && currentTime - lastPetalTime > petalInterval) {
       createPetal();
