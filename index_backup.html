@@ -8,44 +8,53 @@
   <meta name="keywords" content="wedding, Jake, Marjo, December 2025, Silang, Tagaytay, Cavite">
   <link rel="canonical" href="https://jakeandmarjowedding.com">
   
-  <!-- Mobile optimization meta tags -->
-  <meta name="format-detection" content="telephone=no">
-  <meta name="msapplication-tap-highlight" content="no">
-  <meta name="theme-color" content="#6B7AA1">
-  
-  <!-- OpenGraph and Twitter -->
-  <meta property="og:title" content="Jake & Marjo Wedding – December 12, 2025">
-  <meta property="og:description" content="Join us for our wedding celebration in Silang & Tagaytay, Cavite">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jakeandmarjowedding.com">
-  <meta property="og:image" content="https://jakeandmarjowedding.com/images/hero.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Jake & Marjo Wedding – December 12, 2025">
-  <meta name="twitter:description" content="Join us for our wedding celebration in Silang & Tagaytay, Cavite">
-  <meta name="twitter:image" content="https://jakeandmarjowedding.com/images/hero.jpg">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  
-  <!-- Preload critical fonts -->
+  <!-- Fonts (Display + Serif + Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   
-  <!-- Stylesheet -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Jake & Marjo — December 12, 2025">
+  <meta property="og:description" content="Join us in Silang & Tagaytay, Cavite — details, maps, attire & RSVP.">
+  <meta property="og:image" content="https://jakeandmarjowedding.com/images/og.jpg">
+  <meta property="og:url" content="https://jakeandmarjowedding.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
   
-  <!-- Reduce motion preference -->
+  <!-- Responsive Design Test -->
   <style>
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    @media screen and (max-width: 600px) {
+      .responsive-test {
+        background: red;
       }
     }
   </style>
+  
+  <!-- JSON-LD: Wedding Event -->
+  <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "Event",
+   "name": "Jake & Marjo Wedding",
+   "startDate": "2025-12-12T15:00:00+08:00",
+   "eventStatus": "https://schema.org/EventScheduled",
+   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+   "location": [
+     {"@type": "Place", "name": "St. John Marie Vianney Parish", "address": "Lalaan II, Silang, Cavite"},
+     {"@type": "Place", "name": "Fruella's Events Venue Tagaytay", "address": "144 Daang Luma, Brgy. Salaban, Amadeo, Cavite"}
+   ],
+   "image": "https://jakeandmarjowedding.com/images/og.jpg",
+   "description": "Wedding details, venue maps, attire, RSVP."
+  }
+  </script>
 </head>
 <body>
   <!-- Skip to main content -->
@@ -54,24 +63,25 @@
   <!-- Navigation -->
   <nav id="nav" class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
+      <a href="#hero" class="nav-brand brand" aria-label="Jake & Marjo Home">
+        <img src="images/brand/jm-mark@2x.png" alt="Jake & Marjo Logo" class="brand-logo" width="48" height="48" />
+      </a>
+      <ul class="nav-menu" role="menubar">
+  <li role="none"><a href="#hero" role="menuitem">Home</a></li>
+  <li role="none"><a href="#schedule" role="menuitem">Timeline</a></li>
+  <li role="none"><a href="#attire" role="menuitem">Attire</a></li>
+  <li role="none"><a href="#stays-travel" role="menuitem">Stays & Travel</a></li>
+  <li role="none"><a href="#registry" role="menuitem">Gifting</a></li>
+  <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+  <li role="none"><a href="#rsvp" role="menuitem">RSVP</a></li>
+      </ul>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <ul class="nav-menu" role="menubar">
-        <li role="none"><a href="#hero" role="menuitem">Home</a></li>
-        <li role="none"><a href="#schedule" role="menuitem">Timeline</a></li>
-        <li role="none"><a href="#venue" role="menuitem">Venue</a></li>
-        <li role="none"><a href="#travel" role="menuitem">Travel</a></li>
-        <li role="none"><a href="#attire" role="menuitem">Attire</a></li>
-        <li role="none"><a href="#registry" role="menuitem">Registry</a></li>
-        <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
-        <li role="none"><a href="#rsvp" role="menuitem">RSVP</a></li>
-      </ul>
     </div>
   </nav>
-
 
   <!-- Main Content -->
   <main id="main">
@@ -81,8 +91,8 @@
       <div class="hero-content">
         <h1 class="hero-names" id="hero-names">Jake & Marjo</h1>
         <p class="hero-tagline" id="hero-tagline">We're getting married!</p>
-        <p class="hero-date" id="hero-date">December 12, 2025</p>
-        <p class="hero-location" id="hero-location">Silang & Tagaytay, Cavite</p>
+  <p class="hero-date" id="hero-date">December 12, 2025</p>
+  <!-- <p class="hero-location" id="hero-location">Silang & Tagaytay, Cavite</p> -->
         <div class="hero-countdown" id="countdown" aria-live="polite">
           <div class="countdown-item">
             <span class="countdown-number" id="days">0</span>
@@ -96,6 +106,10 @@
             <span class="countdown-number" id="minutes">0</span>
             <span class="countdown-label">Minutes</span>
           </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">0</span>
+            <span class="countdown-label">Seconds</span>
+          </div>
         </div>
         <div class="hero-actions">
           <a href="#rsvp" class="btn btn-primary">RSVP</a>
@@ -104,94 +118,11 @@
       </div>
     </section>
 
-    <!-- Timeline Section -->
+    <!-- Timeline Section (with integrated maps, no venue section) -->
     <section id="schedule" class="schedule section">
       <div class="container">
-        <h2>Timeline of Events</h2>
         <div class="schedule-grid" id="schedule-grid">
-          <!-- Schedule items will be populated by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Venue Section -->
-    <section id="venue" class="venue section">
-      <div class="container">
-        <h2>Venue</h2>
-        <div class="venue-grid">
-          <div class="venue-item" id="ceremony-venue">
-            <h3>Ceremony</h3>
-            <p class="venue-label" id="ceremony-label">St. John Marie Vianney Parish — Lalaan II, Silang, Cavite</p>
-            <div class="venue-map">
-              <iframe 
-                id="ceremony-map"
-                src="https://www.google.com/maps?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite&z=16&output=embed"
-                width="100%" 
-                height="300" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Ceremony venue map">
-              </iframe>
-            </div>
-            <div class="venue-directions" id="ceremony-directions">
-              <a href="https://www.google.com/maps?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite" target="_blank" rel="noopener">Open in Google Maps</a>
-              <a href="https://waze.com/ul?q=St.%20John%20Marie%20Vianney%20Parish%20Lalaan%20II%20Silang%20Cavite" target="_blank" rel="noopener">Open in Waze</a>
-              <a href="http://maps.apple.com/?q=St.+John+Marie+Vianney+Parish+Lalaan+II+Silang+Cavite" target="_blank" rel="noopener">Open in Apple Maps</a>
-            </div>
-            <ul class="venue-notes" id="ceremony-notes">
-              <li>Parking available</li>
-              <li>Please arrive 15 minutes early</li>
-            </ul>
-          </div>
-          
-          <div class="venue-item" id="reception-venue">
-            <h3>Reception</h3>
-            <p class="venue-label" id="reception-label">Fruella's Events Venue Tagaytay — 144 Daang Luma, Brgy. Salaban, Amadeo, Cavite</p>
-            <div class="venue-map">
-              <iframe 
-                id="reception-map"
-                src="https://www.google.com/maps?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite&z=16&output=embed"
-                width="100%" 
-                height="300" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade"
-                title="Reception venue map">
-              </iframe>
-            </div>
-            <div class="venue-directions" id="reception-directions">
-              <a href="https://www.google.com/maps?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite" target="_blank" rel="noopener">Open in Google Maps</a>
-              <a href="https://waze.com/ul?q=Fruella%27s%20Events%20Venue%20Tagaytay%20Amadeo%20Cavite" target="_blank" rel="noopener">Open in Waze</a>
-              <a href="http://maps.apple.com/?q=Fruella%27s%20Events%20Venue%20Tagaytay%20144%20Daang%20Luma%20Salaban%20Amadeo%20Cavite" target="_blank" rel="noopener">Open in Apple Maps</a>
-            </div>
-            <ul class="venue-notes" id="reception-notes">
-              <li>Garden formal</li>
-              <li>Follow venue signages upon entry</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery section">
-      <div class="container">
-        <h2>Gallery</h2>
-        <div class="gallery-grid" id="gallery-grid">
-          <!-- Gallery items will be populated by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Travel Section -->
-    <section id="travel" class="travel section">
-      <div class="container">
-        <h2>Travel & Accommodations</h2>
-        <div class="travel-grid" id="travel-grid">
-          <!-- Travel items will be populated by JS -->
+          <!-- Schedule items will be populated by JS, with map buttons inside timeline cards -->
         </div>
       </div>
     </section>
@@ -200,17 +131,9 @@
     <section id="attire" class="attire section">
       <div class="container">
         <h2>Guest Attire</h2>
-        
-        <div class="attire-palette" id="attire-palette">
-          <!-- Color palette will be populated by JS -->
-        </div>
-        
         <div class="attire-grid">
           <div class="attire-section">
-            <h3 id="women-title">Women</h3>
-            <div class="attire-palette" id="women-palette">
-              <!-- Women's color palette will be populated by JS -->
-            </div>
+            <h3 id="women-title">WOMEN</h3>
             <p class="attire-guidelines" id="women-guidelines">Strictly long formal gown — Pale Blue, Pale Gray, Pale Green.</p>
             <div class="carousel-container">
               <div class="carousel" id="women-carousel" aria-label="Women's attire examples">
@@ -230,17 +153,11 @@
                 <div class="carousel-dots" id="women-dots" role="tablist" aria-label="Slide navigation">
                   <!-- Dots will be populated by JS -->
                 </div>
-                <div class="swipe-hint" aria-hidden="true">SWIPE TO VIEW</div>
               </div>
-              <div class="carousel-overlay">FOR THE LADIES</div>
             </div>
           </div>
-          
           <div class="attire-section">
-            <h3 id="men-title">Gentlemen</h3>
-            <div class="attire-palette" id="men-palette">
-              <!-- Men's color palette will be populated by JS -->
-            </div>
+            <h3 id="men-title">GENTLEMEN</h3>
             <p class="attire-guidelines" id="men-guidelines">Black formal suit with white dress shirt, black bow tie or neck tie, and black shoes.</p>
             <div class="carousel-container">
               <div class="carousel" id="men-carousel" aria-label="Men's attire examples">
@@ -260,23 +177,48 @@
                 <div class="carousel-dots" id="men-dots" role="tablist" aria-label="Slide navigation">
                   <!-- Dots will be populated by JS -->
                 </div>
-                <div class="swipe-hint" aria-hidden="true">SWIPE TO VIEW</div>
               </div>
-              <div class="carousel-overlay">FOR THE GENTLEMEN</div>
             </div>
           </div>
         </div>
-        
-        <p class="attire-note" id="attire-note">To honor the theme of the occasion, we kindly ask all guests to strictly follow our color palette.</p>
+        <p class="attire-note" id="attire-note">
+          To honor the theme of the occasion, we kindly ask all guests to strictly follow our color palette.
+        </p>
       </div>
     </section>
 
-    <!-- Registry Section -->
-    <section id="registry" class="registry section">
+    <!-- Stays & Travel Section -->
+    <section id="stays-travel" class="stays-travel section">
       <div class="container">
-        <h2>Registry</h2>
-        <div class="registry-grid" id="registry-grid">
-          <!-- Registry items will be populated by JS -->
+        <div class="block stays">
+          <h2 id="stays-title">STAYS</h2>
+          <p class="sub" id="stays-subcopy">We are pleased to share a selection of recommended accommodations for our big day.</p>
+          <p><a class="cta outline" data-embed-link id="stays-link" href="#" role="button" rel="noopener noreferrer">OUR RECOMMENDATIONS</a></p>
+        </div>
+        <div class="block travel">
+          <h2 id="travel-title">TRAVEL GUIDE</h2>
+          <p class="sub" id="travel-subcopy">To make your stay even more memorable, here's a curated list of places to lounge and enjoy.</p>
+          <div class="cta-row" id="travel-links">
+            <!-- Travel guide links will be populated by JS -->
+          </div>
+        </div>
+      </div>
+      <!-- Modal viewer (only if embed=true) -->
+      <div class="flip-modal" hidden role="dialog" aria-modal="true" aria-label="Flip-book viewer">
+        <button class="close" aria-label="Close">×</button>
+        <iframe title="Flip book" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+
+    <!-- Gifting Section (formerly Registry, using stays-travel style) -->
+    <section id="registry" class="stays-travel section">
+      <div class="container">
+        <div class="block registry">
+          <h2>Gifting</h2>
+          <p class="sub">Your presence is the greatest gift. Should you wish to celebrate with a gift, a contribution to our journey would be deeply appreciated.</p>
+          <div class="cta-row" id="registry-grid">
+            <a class="cta outline" href="#" target="_blank" rel="noopener">OUR NEXT CHAPTER: HOME</a>
+          </div>
         </div>
       </div>
     </section>
@@ -284,7 +226,7 @@
     <!-- FAQ Section -->
     <section id="faq" class="faq section">
       <div class="container">
-        <h2>Frequently Asked Questions</h2>
+        <h2>FREQUENTLY ASKED QUESTIONS</h2>
         <div class="faq-list" id="faq-list">
           <!-- FAQ items will be populated by JS -->
         </div>
@@ -295,63 +237,23 @@
     <section id="rsvp" class="rsvp section">
       <div class="container">
         <h2>RSVP</h2>
-        <form id="rsvp-form" class="rsvp-form" novalidate>
-          <div class="form-group">
-            <label for="rsvp-name">Name <span aria-label="required">*</span></label>
-            <input type="text" id="rsvp-name" name="name" required aria-describedby="name-error">
-            <div id="name-error" class="error-message" role="alert"></div>
-          </div>
-          
-          <div class="form-group">
-            <label for="rsvp-email">Email <span aria-label="required">*</span></label>
-            <input type="email" id="rsvp-email" name="email" required aria-describedby="email-error">
-            <div id="email-error" class="error-message" role="alert"></div>
-          </div>
-          
-          <div class="form-group">
-            <fieldset>
-              <legend>Will you be attending? <span aria-label="required">*</span></legend>
-              <div class="radio-group">
-                <label>
-                  <input type="radio" name="attendance" value="accept" required>
-                  Yes, I'll be there!
-                </label>
-                <label>
-                  <input type="radio" name="attendance" value="decline" required>
-                  Sorry, I can't make it
-                </label>
-              </div>
-            </fieldset>
-          </div>
-          
-          <div class="form-group">
-            <label for="rsvp-guests">Number of guests (including yourself)</label>
-            <select id="rsvp-guests" name="guests">
-              <option value="1">1 guest</option>
-              <option value="2">2 guests</option>
-              <option value="3">3 guests</option>
-              <option value="4">4 guests</option>
-            </select>
-          </div>
-          
-          <div class="form-group">
-            <label for="rsvp-dietary">Dietary restrictions or allergies</label>
-            <textarea id="rsvp-dietary" name="dietary" rows="3" placeholder="Please let us know of any dietary needs..."></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label for="rsvp-message">Message for the couple</label>
-            <textarea id="rsvp-message" name="message" rows="4" placeholder="Share your excitement or well wishes..."></textarea>
-          </div>
-          
-          <button type="submit" class="btn btn-primary">Send RSVP</button>
-        </form>
-        
-        <div id="rsvp-fallback" class="rsvp-fallback" style="display: none;">
-          <h3>RSVP Details</h3>
-          <div id="rsvp-summary"></div>
-          <button id="copy-rsvp" class="btn btn-secondary">Copy to Clipboard</button>
+        <p class="sub">RSVP by <strong class="deadline"></strong>.</p>
+
+        <div class="envelope" aria-labelledby="rsvpButton">
+          <img class="envelope-bg" src="" alt="Blue envelope" loading="lazy" />
+          <img class="envelope-card" src="" alt="Photo card" loading="lazy" />
+          <a id="rsvpButton" class="cta outline" href="#" data-rsvp-trigger>
+            RSVP HERE
+          </a>
         </div>
+
+        <p class="closed-note" hidden></p>
+      </div>
+
+      <!-- Modal (only if embed=true) -->
+      <div class="rsvp-modal" hidden role="dialog" aria-modal="true" aria-label="RSVP form">
+        <button class="close" aria-label="Close">×</button>
+        <iframe title="RSVP form" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
   </main>
@@ -359,12 +261,14 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer-brand" id="footer-brand">
+        <img src="images/brand/jm-mark-footer@2x.png" alt="Jake & Marjo Logo" class="footer-logo" width="80" height="80" />
+      </div>
       <div class="footer-content">
-        <p class="footer-hashtag">#JaicosAndMarjorie2025</p>
         <div class="footer-socials">
           <!-- Social links would go here -->
         </div>
-        <p class="footer-copyright">&copy; 2025 Jaicos & Marjorie. All rights reserved.</p>
+        <p class="footer-copyright">&copy; 2025 Jake & Marjo. Made with ❤️ for our special day.</p>
       </div>
     </div>
   </footer>
@@ -372,14 +276,14 @@
   <!-- Back to Top Button -->
   <button id="back-to-top" class="back-to-top" aria-label="Back to top">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="18,15 12,9 6,15"></polyline>
+      <polyline points="6,9 12,3 18,9"></polyline>
+      <line x1="12" y1="3" x2="12" y2="21"></line>
     </svg>
   </button>
 
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="" loading="lazy">
       <button id="lightbox-close" class="lightbox-close" aria-label="Close image viewer">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -396,11 +300,14 @@
           <polyline points="9,18 15,12 9,6"></polyline>
         </svg>
       </button>
+      <img id="lightbox-img" class="lightbox-img" alt="">
     </div>
   </div>
 
   <!-- Screen reader announcements -->
-  <div id="sr-announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <div id="sr-announcements" class="sr-announcements" aria-live="polite" aria-atomic="true">
+    <!-- Announcements will be populated by JS -->
+  </div>
 
   <!-- JavaScript -->
   <script src="js/app.js"></script>
