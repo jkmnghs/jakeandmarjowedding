@@ -157,7 +157,7 @@ async function loadConfig() {
       names: "Jake & Marjo",
       dateISO: "2025-12-12T15:00:00+08:00",
       locationShort: "Silang & Tagaytay, Cavite",
-      tagline: "We're getting married!",
+      tagline: "are getting married!",
       heroImage: "images/hero.jpg"
     };
   }
@@ -1255,6 +1255,17 @@ function populateSchedule() {
   
   container.innerHTML = config.schedule.map(item => {
     let mapButtons = '';
+    let logo = '';
+    
+    // Add church logo for CEREMONY card
+    if (item.title === 'CEREMONY') {
+      logo = `<img src="images/ChurchLogo.jpg" alt="Church Logo" class="schedule-item-logo large">`;
+    }
+    
+    // Add reception logo for DINNER AND SOCIALS card
+    if (item.title === 'DINNER AND SOCIALS') {
+      logo = `<img src="images/ReceptionLogo.jpg" alt="Reception Logo" class="schedule-item-logo extra-large">`;
+    }
     
     // Add ceremony map buttons for CEREMONY card
     if (item.title === 'CEREMONY' && config.venue?.ceremony?.directions) {
@@ -1280,8 +1291,8 @@ function populateSchedule() {
       `;
     }
     
-    // Add reception map buttons for SOCIALS, DINNER AND DANCING card
-    if (item.title === 'SOCIALS, DINNER AND DANCING' && config.venue?.reception?.directions) {
+    // Add reception map buttons for DINNER AND SOCIALS card
+    if (item.title === 'DINNER AND SOCIALS' && config.venue?.reception?.directions) {
       mapButtons = `
         <div class="cta-row">
           <a href="${config.venue.reception.directions.google}" 
@@ -1306,6 +1317,7 @@ function populateSchedule() {
     
     return `
       <div class="schedule-item">
+        ${logo}
         <h2>${item.title}</h2>
         <h3>${item.time}</h3>
         <p class="schedule-desc">${item.desc}</p>
