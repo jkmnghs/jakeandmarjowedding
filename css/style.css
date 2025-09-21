@@ -386,7 +386,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 700px) {
   .brand-logo {
     width: var(--nav-logo-size-mobile);
   }
@@ -401,10 +401,6 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   }
 }
 
-/* Sticky nav: shrink on scroll but keep readable */
-.nav.is-scrolled .brand-logo {
-  width: calc(var(--nav-logo-size-desktop) * 0.75);
-}
 
 /* Optional wordmark next to crest */
 .brand-word {
@@ -573,7 +569,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
   text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
@@ -629,6 +625,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   gap: var(--space-lg);
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: var(--space-xl);
 }
 
 /* Make hero buttons text white and bold */
@@ -637,6 +634,9 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   font-weight: bold !important;
   border-color: white !important;
   border-width: 2px !important;
+  width: 200px !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
 }
 
 .hero-actions .btn:hover,
@@ -677,6 +677,39 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   transition: var(--transition);
   backdrop-filter: blur(2px); /* Reduced blur effect for better readability */
   border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
+}
+
+/* Schedule item logo styling */
+.schedule-item-logo {
+  width: 60px; /* Default size - easily adjustable */
+  height: 60px; /* Default size - easily adjustable */
+  object-fit: contain;
+  margin: 0 auto var(--space-xs) auto;
+  display: block;
+  background: rgba(255, 255, 255, 0.1); /* Match schedule item background */
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-xs);
+}
+
+/* Resizable logo variants - add these classes to customize size */
+.schedule-item-logo.small {
+  width: 40px;
+  height: 40px;
+}
+
+.schedule-item-logo.medium {
+  width: 60px;
+  height: 60px;
+}
+
+.schedule-item-logo.large {
+  width: 170px;
+  height: 90px;
+}
+
+.schedule-item-logo.extra-large {
+  width: 150px;
+  height: 150px;
 }
 
 .schedule-item:hover {
@@ -1363,6 +1396,18 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   animation: fadeIn 0.3s ease-out;
 }
 
+/* FAQ answer links */
+.faq-answer a {
+  color: #ADD8E6;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.faq-answer a:hover {
+  color: #87CEEB;
+  text-decoration: underline;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -1411,7 +1456,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .envelope-card {
   position: absolute;
   left: 50%;
-  top: 52%;
+  top: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
   border-radius: 8px;
@@ -1546,7 +1591,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .footer {
   background: var(--gray-900);
   color: white;
-  padding: var(--space-2xl) 0;
+  padding: var(--space-lg) 0; /* Reduced from var(--space-2xl) to var(--space-lg) */
   margin: 0;
   margin-bottom: 0 !important;
   width: 100vw;
@@ -1562,7 +1607,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .footer-brand {
   display: grid;
   place-items: center;
-  margin-block: 2rem 1rem;
+  margin-block: .1rem 0.5rem; /* Reduced from 2rem 1rem to 1rem 0.5rem */
 }
 
 .footer-brand .footer-logo {
@@ -1863,6 +1908,14 @@ body > *:last-child {
     align-items: center;
     gap: var(--space-md);
     width: 100%;
+  }
+  
+  /* Make church name one line on mobile */
+  .schedule-desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.95rem; /* Slightly smaller for mobile */
   }
   
   .hero-actions .btn {
@@ -2528,8 +2581,8 @@ body > *:last-child {
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100% auto; /* Full width, auto height */
-  opacity: 1; /* Removed opacity - fully visible */
-  z-index: 0;
+  opacity: 0.8; /* Make it a bit more visible */
+  z-index: 1; /* Bring it above the section background */
   pointer-events: none;
 }
 
@@ -2543,7 +2596,7 @@ body > *:last-child {
 .schedule .container,
 .venue .container {
   position: relative;
-  z-index: 2;
+  z-index: 10; /* Much higher z-index to ensure content is visible */
 }
 
 /* Mobile adjustments for flower background */
@@ -2712,12 +2765,12 @@ body > *:last-child {
   .social-media { margin: 1.25rem auto 1.75rem; position:relative; }
   .social-video {
     display:block;
-    width:min(90vw, 260px);
+    width:min(90vw, 150px); /* Increased from 260px to 400px */
     margin-left:auto;
     margin-right:auto;
     aspect-ratio: 3 / 2;
     height:auto;
-    border-radius:12px;
+    border-radius: 0; /* Removed curved corners */
     box-shadow: var(--shadow, 0 8px 24px rgba(0,0,0,.06));
     background:#000; /* while poster loads */
     object-fit: cover;

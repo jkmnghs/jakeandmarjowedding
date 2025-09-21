@@ -17,7 +17,7 @@ async function loadConfig() {
       names: "Jake & Marjo",
       dateISO: "2025-12-12T15:00:00+08:00",
       locationShort: "Silang & Tagaytay, Cavite",
-      tagline: "We're getting married!",
+      tagline: "are getting married!",
       heroImage: "images/hero.jpg"
     };
   }
