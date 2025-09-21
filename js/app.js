@@ -790,9 +790,10 @@ function populateRSVPSection() {
     envelopeBg.src = config.rsvp.envelopeImage;
   }
   
-  if (envelopeCard && config.rsvp.cardImage) {
-    envelopeCard.src = config.rsvp.cardImage;
-  }
+  // Commented out card.png functionality
+  // if (envelopeCard && config.rsvp.cardImage) {
+  //   envelopeCard.src = config.rsvp.cardImage;
+  // }
   
   if (rsvpButton) {
     rsvpButton.textContent = config.rsvp.buttonLabel || 'RSVP HERE';

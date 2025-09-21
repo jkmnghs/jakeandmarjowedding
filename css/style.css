@@ -493,14 +493,14 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   .nav-menu {
     position: absolute;
     top: 100%;
-    left: 0;
     right: 0;
+    width: 280px; /* Fixed width for horizontal slide */
     background: var(--bg);
     flex-direction: column;
     padding: var(--space-lg);
     gap: var(--space-lg);
     box-shadow: var(--shadow-lg);
-    transform: translateY(-100%);
+    transform: translateX(100%); /* Start from right, hidden */
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
@@ -508,7 +508,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   }
   
   .nav-menu.open {
-    transform: translateY(0);
+    transform: translateX(0); /* Slide in from right to left */
     opacity: 1;
     visibility: visible;
   }
@@ -820,7 +820,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
   color: #666;
   max-width: 46ch;
   margin: 0.75rem auto 1.75rem;
-  font-size: 1.1rem;
+  font-size: 0.95rem; /* Reduced from 1.1rem to 0.95rem for smaller text */
   line-height: 1.6;
 }
 
@@ -1591,7 +1591,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .footer {
   background: var(--gray-900);
   color: white;
-  padding: var(--space-lg) 0; /* Reduced from var(--space-2xl) to var(--space-lg) */
+  padding: var(--space-md) 0; /* Reduced from var(--space-lg) to var(--space-md) for slimmer look */
   margin: 0;
   margin-bottom: 0 !important;
   width: 100vw;
@@ -1607,7 +1607,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 .footer-brand {
   display: grid;
   place-items: center;
-  margin-block: .1rem 0.5rem; /* Reduced from 2rem 1rem to 1rem 0.5rem */
+  margin-block: 0 0.25rem; /* Further reduced margins for slimmer footer */
 }
 
 .footer-brand .footer-logo {
@@ -1625,17 +1625,23 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 
 .footer-content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-hashtag {
   font-family: var(--script);
   font-size: 1.5rem;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-sm); /* Reduced from var(--space-lg) to var(--space-sm) */
   color: var(--secondary);
+  text-align: center;
 }
 
 .footer-socials {
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-sm); /* Reduced from var(--space-lg) to var(--space-sm) */
+  text-align: center;
 }
 
 .footer-copyright {
