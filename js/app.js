@@ -1160,6 +1160,9 @@ function populateContent() {
   // FAQ
   populateFAQ();
   
+  // Initialize modal functionality after all content is populated
+  initializeStaysTravelModal();
+  
   // Initialize Add to Calendar
   initializeAddToCalendar();
   
@@ -1377,34 +1380,74 @@ function populateStaysTravel() {
     }
   }
   
-  // Initialize modal functionality
-  initializeStaysTravelModal();
+  // Initialize modal functionality will be called after all content is populated
 }
 
 function initializeStaysTravelModal() {
-  const embed = config.staysTravel?.embed;
-  const modal = document.querySelector('.flip-modal');
-  const iframe = modal?.querySelector('iframe');
-  const closeBtn = modal?.querySelector('.close');
+  // Handle all flip modals on the page
+  const modals = document.querySelectorAll('.flip-modal');
   
-  if (!embed || !modal || !iframe || !closeBtn) return;
+  modals.forEach(modal => {
+    const iframe = modal.querySelector('iframe');
+    const closeBtn = modal.querySelector('.close');
+    
+    if (!modal || !iframe || !closeBtn) return;
+    
+    // Close modal function for this specific modal
+    const closeModal = () => {
+      modal.hidden = true;
+      iframe.src = '';
+      iframe.title = '';
+      
+      // Return focus to the triggering element
+      const returnFocus = modal.dataset.returnFocus;
+      if (returnFocus) {
+        const element = document.querySelector(`[href="${returnFocus}"]`) || document.querySelector(`[data-return-focus="${returnFocus}"]`);
+        if (element) element.focus();
+        delete modal.dataset.returnFocus;
+      }
+    };
+    
+    // Close button
+    closeBtn.addEventListener('click', closeModal);
+    
+    // ESC key
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+    
+    // Click outside modal
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  });
   
-  // Handle embed link clicks
+  // Handle embed link clicks for all sections
   const embedLinks = document.querySelectorAll('[data-embed-link]');
   embedLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-      if (!embed) return;
-      
       e.preventDefault();
+      
+      // Find the closest modal to this link
+      const section = link.closest('section');
+      const modal = section?.querySelector('.flip-modal');
+      const iframe = modal?.querySelector('iframe');
+      
+      if (!modal || !iframe) return;
       
       // Set iframe source and open modal
       iframe.src = link.href;
       iframe.title = `Flip book: ${link.textContent}`;
       modal.hidden = false;
-      modal.dataset.returnFocus = link;
+      modal.dataset.returnFocus = link.href;
       
       // Focus close button for accessibility
-      closeBtn.focus();
+      const closeBtn = modal.querySelector('.close');
+      if (closeBtn) closeBtn.focus();
       
       // Dispatch analytics event
       const event = new CustomEvent('external-link:open', {
@@ -1412,35 +1455,6 @@ function initializeStaysTravelModal() {
       });
       document.dispatchEvent(event);
     });
-  });
-  
-  // Close modal function
-  const closeModal = () => {
-    modal.hidden = true;
-    iframe.src = '';
-    
-    // Restore focus to trigger element
-    const returnFocus = modal.dataset.returnFocus;
-    if (returnFocus) {
-      document.querySelector(`[href="${returnFocus}"]`)?.focus();
-    }
-  };
-  
-  // Close button click
-  closeBtn.addEventListener('click', closeModal);
-  
-  // ESC key close
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.hidden) {
-      closeModal();
-    }
-  });
-  
-  // Backdrop click (if clicking on modal but not iframe)
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
   });
 }
 
@@ -1514,12 +1528,25 @@ function populateAttire() {
 }
 
 function populateRegistry() {
-  const container = document.getElementById('registry-links');
+  const container = document.getElementById('registry-grid');
   if (!container || !config.registry) return;
   
-  container.innerHTML = config.registry.map(item => `
-    <a class="cta outline" href="${item.url}" role="button" target="_blank" rel="noopener">${item.label}</a>
-  `).join('');
+  // Handle new registry structure with embed functionality
+  if (config.registry.links && Array.isArray(config.registry.links)) {
+    container.innerHTML = config.registry.links.map(item => {
+      if (config.registry.embed) {
+        return `<a class="cta outline" href="${item.url}" role="button" data-embed-link>${item.label}</a>`;
+      } else {
+        return `<a class="cta outline" href="${item.url}" role="button" target="_blank" rel="noopener">${item.label}</a>`;
+      }
+    }).join('');
+  } else {
+    // Fallback for old array format
+    const items = Array.isArray(config.registry) ? config.registry : config.registry.links || [];
+    container.innerHTML = items.map(item => `
+      <a class="cta outline" href="${item.url}" role="button" target="_blank" rel="noopener">${item.label}</a>
+    `).join('');
+  }
 }
 
 function populateFAQ() {
