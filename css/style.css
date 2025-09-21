@@ -564,7 +564,7 @@ button:not(.btn):not(.nav-toggle):not(.close):not(.customize-actions button):not
 }
 
 .hero-names {
-  font-family: var(--display);
+  font-family: 'Forum', serif;
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 400;
   text-transform: uppercase;
