@@ -1,0 +1,12 @@
+# Local development server
+server.js
+
+# Node modules (if you ever install packages)
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

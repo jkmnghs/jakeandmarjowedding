@@ -137,7 +137,7 @@
   ],
 
   "rsvp": {
-    "deadlineISO": "2025-10-31",
+    "deadlineISO": "2025-11-10",
     "link": "https://docs.google.com/forms/d/e/1FAIpQLScwsI6-FxeK9wOjNWBq4jqidVLZzDBZ8phVtl_NXkBAZA4vrQ/viewform",
     "embed": true,
     "buttonLabel": "RSVP HERE",
@@ -147,7 +147,7 @@
     "closedMessage": "RSVP is now closed. Please contact the couple directly."
   },
 
-  "rsvpEmail": "you@example.com",
+  "rsvpEmail": "jakeandmarjo@gmail.com",
 
   "theme": {
     "primary": "#6B7AA1",
