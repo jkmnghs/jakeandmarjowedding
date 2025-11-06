@@ -140,7 +140,9 @@ function initializeMobileOptimizations() {
  */
 async function loadConfig() {
   try {
-    const response = await fetch('./config.json');
+    // Add cache-busting parameter to ensure fresh config
+    const cacheBuster = new Date().getTime();
+    const response = await fetch(`./config.json?v=${cacheBuster}`);
     if (!response.ok) throw new Error('Failed to load config');
     config = await response.json();
     
